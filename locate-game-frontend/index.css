@@ -1,7 +1,14 @@
+#is_visible{
+  display: block;
+}
+
+#is_hidden{
+  display: none;
+}
 
 .full-page-container{
 
-    width: 30em;
+    width: 10rem;
     height: 100%;
     border: 25px solid green;
     padding: 25px;
