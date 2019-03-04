@@ -7,38 +7,88 @@
     <title>Document</title>
     <script defer src="./src/location.js">  </script>
     <script defer src="./src/index.js">  </script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
   <div class="full-page-container">
-    
+
 
 <!-- Div to show user log-in page -->
     <div class="login-page">
-
+      <h2>Log in</h2>
+      <form class="login" action="index.html" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" value="">
+        <br>
+        <button type="button" name="submit">Submit</button>
+        <br>
+        <button type="button" name="sign-up">Sign-up</button>
+      </form>
     </div>
 
 
 <!-- Div to show when user is filling out sign-in form -->
     <div class="sign-up">
-
+      <h2>Sign Up</h2>
+      <form class="login" action="index.html" method="post">
+        <label for="name">Name</label>
+        <input type="text" name="name" value="">
+        <br>
+        <label for="new-username">Username</label>
+        <input type="text" name="new-username" value="">
+        <br>
+        <button type="button" name="submit">Submit</button>
+      </form>
     </div>
 
 
 <!-- Div to show when user is orientating -->
     <div class="orientate">
-
+      <h2>Orientate Yourself</h2>
+      <button type="button" name="ready">I'm Ready!</button>
     </div>
 
 
 <!-- Div to show gameplay -->
     <div class="gameplay">
-
+      <h2>321 Go!</h2>
+      <button type="button" name="select-location">CONFIRM</button>
     </div>
 
 
 <!-- Div to show scoreboard -->
     <div class="scoreboard">
+      <h2>Scoreboard</h2>
+      <h4>Your Score: </h4>
+      <br>
+      <table>
+    <thead>
+        <tr>
+            <th colspan="2">Scoreboard</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Username</strong></td>
+            <td><strong>Score</strong></td>
+        </tr>
+        <tr>
+            <td>Trigger</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td>Shano</td>
+            <td>45</td>
+        </tr>
+        <tr>
+            <td>The Danger Song</td>
+            <td>56</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<button type="button" name="restart">New Game</button>
 
     </div>
 

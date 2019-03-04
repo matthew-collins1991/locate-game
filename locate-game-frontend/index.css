@@ -1,8 +1,11 @@
 
 .full-page-container{
-  
-  background-color: yellow;
 
+    width: 30em;
+    height: 100%;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
 }
 
 .login-page{
