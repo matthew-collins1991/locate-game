@@ -2,6 +2,11 @@ const heading = document.createElement('h1')
 heading.innerHTML = 'LOCATION TEST'
 document.body.prepend(heading)
 
+
+
+document.addEventListener('DOMContentLoaded', () => { init() })
+
+
 const addButton = () => {
     const button = document.createElement('button')
     button.innerText = "show my location"
@@ -39,4 +44,5 @@ const init = () => {
     addButton()
 }
 
-init()
+
+
