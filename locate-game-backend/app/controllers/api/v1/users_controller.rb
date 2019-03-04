@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
       end
     
       def create
-        @user = User.new(score: params[:score], user_id: params[:user_id])
+        @user = User.new(name: params[:name], username: params[:username])
         if @user.save
           render json: @user
         else

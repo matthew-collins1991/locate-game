@@ -30,23 +30,21 @@
 
 <!-- Div to show when user is filling out sign-in form -->
     <div class="sign-up" id='is_hidden'>
-      <h2>Sign Up</h2>
-      <form class="login" action="index.html" method="post">
-        <label for="name">Name</label>
-        <input type="text" name="name" value="">
-        <br>
-        <label for="new-username">Username</label>
-        <input type="text" name="new-username" value="">
-        <br>
-        <button onclick="visibilityFunction()" type="button" name="submit">Submit</button>
-      </form>
+        <h3>Sign up!</h3>
+        <form id="signup_form">
+            <input id="signup_name" type="text" name="name" placeholder="Name" />
+            <input id="signup_username" type="text" name="username" placeholder="Username" />
+            <input type="submit" value="Sign Up!" />
+        </form>
+
     </div>
 
 
 <!-- Div to show when user is orientating -->
     <div class="orientate" id='is_hidden'>
-      <h2>Orientate Yourself</h2>
-      <button onclick="visibilityFunction()" type="button" name="ready">I'm Ready!</button>
+        <h2 id= "welcome"></h2>
+          <span><p id="current-location"></p></span>
+
     </div>
 
 
