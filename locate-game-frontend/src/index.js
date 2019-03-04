@@ -1,6 +1,8 @@
+const findLocationDiv = document.querySelector('.find-location')
+
 const heading = document.createElement('h1')
 heading.innerHTML = 'LOCATION TEST'
-document.body.prepend(heading)
+findLocationDiv.prepend(heading)
 
 
 
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => { init() })
 const addButton = () => {
     const button = document.createElement('button')
     button.innerText = "show my location"
-    document.body.append(button)
+    findLocationDiv.append(button)
 
     button.addEventListener('click', () => {
         getLocation()
@@ -19,10 +21,11 @@ const addButton = () => {
 
 const getLocation = () => {
     navigator.geolocation.getCurrentPosition(showLocation);
+
 }
 
-const showLocation = (position) => { 
-    const latlong = `${position.coords.latitude},${position.coords.longitude}` 
+const showLocation = (position) => {
+    const latlong = `${position.coords.latitude},${position.coords.longitude}`
     getAddressFromApi(latlong)
 }
 
@@ -36,13 +39,45 @@ const getAddressFromApi = (coords) => {
 const addLocationToPage = (location) => {
    const p = document.createElement('p')
     p.innerText = `Your current location is: ${location}`
-    document.body.append(p)
+    findLocationDiv.append(p)
 }
- 
+
 
 const init = () => {
     addButton()
 }
 
 
+const point = document.createElement('img')
+point.className = 'compass-point'
+const gameSection = document.querySelector('.game-section')
 
+point.src = 'image/compass.svg'
+point.height = 150;
+point.width = 150;
+
+gameSection.appendChild(point)
+
+
+
+// navigator.geolocation.watchPosition((data) => {
+// // point.style.transform = `rotate(${data.coords.heading}deg)`
+// console.log(data)
+// })
+
+// this should fire when signed in or new game clicked
+
+if(window.DeviceorientationEvent){
+
+  console.log('Device orientation is supported ')
+
+  window.addEventListener('deviceorientation', function(event) {
+    let alpha = event.alpha
+    let beta = event.beta
+    let gamma = event.gamma
+     point.style.transform = `rotate(${alpha}deg)`
+  });
+
+} else {
+  console.log('device orientation is NOT supported')
+}
