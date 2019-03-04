@@ -1,6 +1,6 @@
 const heading = document.createElement('h1')
 heading.innerHTML = 'LOCATION TEST'
-document.body.prepend(heading)
+// document.body.prepend(heading)
 
 
 document.addEventListener('DOMContentLoaded', () => { init() })
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => { init() })
 const addButton = () => {
     const button = document.createElement('button')
     button.innerText = "show my location"
-    document.body.append(button)
+    // document.body.append(button)
 
     button.addEventListener('click', () => {
         getLocation()
@@ -20,8 +20,8 @@ const getLocation = () => {
     navigator.geolocation.getCurrentPosition(showLocation);
 }
 
-const showLocation = (position) => { 
-    const latlong = `${position.coords.latitude},${position.coords.longitude}` 
+const showLocation = (position) => {
+    const latlong = `${position.coords.latitude},${position.coords.longitude}`
     getAddressFromApi(latlong)
 }
 
@@ -36,11 +36,8 @@ const addLocationToPage = (location) => {
     p.innerText = `Your current location is: ${location}`
     document.body.append(p)
 }
- 
+
 
 const init = () => {
     addButton()
 }
-
-
-

@@ -1,3 +1,9 @@
+*{
+  font-family: 'Playfair Display', serif;
+    box-sizing: border-box;
+
+}
+
 #is_visible{
   display: block;
 }
@@ -6,35 +12,38 @@
   display: none;
 }
 
-.full-page-container{
+html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0px;
+        }
 
-    width: 10rem;
-    height: 100%;
-    border: 25px solid green;
-    padding: 25px;
-    margin: 25px;
+.full-page-container{
+    min-height: 100%;
+    background-color: grey;
+    padding: 0px;
 }
 
 .login-page{
-
+padding: 25px;
 }
 
 .sign-up{
-
+padding: 25px;
 }
 
 .orientate{
-
+padding: 25px;
 }
 
 .gameplay{
-
+padding: 25px;
 }
 
 .scoreboard{
-
+padding: 25px;
 }
 
 .dropdown-menu{
-
+padding: 25px;
 }
