@@ -1,5 +1,10 @@
 const USERSURL =  'http://localhost:3000/api/v1/users'
 const BASEURL =  'http://localhost:3000/api/v1'
+const findLocationDiv = document.querySelector('.find-location')
+
+const heading = document.createElement('h1')
+heading.innerHTML = 'LOCATION TEST'
+findLocationDiv.prepend(heading)
 
 let currentDiv = "login-page"
 
@@ -12,8 +17,12 @@ const scoreboardDiv = document.querySelector('.scoreboard')
 
 function visibilityFunction() {
 
-  switch (currentDiv) {
+const addButton = () => {
+    const button = document.createElement('button')
+    button.innerText = "show my location"
+    findLocationDiv.append(button)
 
+  switch (currentDiv) {
     case "login-page":
       loginDiv.id = 'is_hidden'
       orientateDiv.id = 'is_visible'
@@ -47,7 +56,15 @@ function visibilityFunction() {
   };
 }
 
+const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(showLocation);
 
+}
+
+const showLocation = (position) => {
+    const latlong = `${position.coords.latitude},${position.coords.longitude}`
+    getAddressFromApi(latlong)
+}
 
 
 
@@ -56,8 +73,8 @@ function visibilityFunction() {
 //
 const signUpFormEl = document.querySelector('#signup_form')
 const signUpDiv = document.querySelector('.sign-up')
-const welcomeEl = document.querySelector('#welcome') 
-const locationEl = document.querySelector('#current-location') 
+const welcomeEl = document.querySelector('#welcome')
+const locationEl = document.querySelector('#current-location')
 
 let loggedIn = false
 
@@ -79,8 +96,13 @@ signUpFormEl.addEventListener('submit', (event) => {
     if (loggedIn) { signUpDiv.style.display = 'none' }
 
     showWelcome()
-    
+
 })
+}
+const addLocationToPage = (location) => {
+   const p = document.createElement('p')
+    p.innerText = `Your current location is: ${location}`
+    findLocationDiv.append(p)
 }
 
 const showWelcome = () => {
@@ -89,6 +111,7 @@ const showWelcome = () => {
 
     welcomeEl.innerText = `Welcome ${state.current_user}`
 }
+
 
 
 const addUserToApi = (name, username) => {
@@ -108,4 +131,36 @@ const addUserToApi = (name, username) => {
 const init = () => {
     // addButton()
     addEventListerToSignUpForm()
+const point = document.createElement('img')
+point.className = 'compass-point'
+const gameSection = document.querySelector('.game-section')
+
+point.src = 'image/compass.svg'
+point.height = 150;
+point.width = 150;
+
+gameSection.appendChild(point)
+
+
+
+// navigator.geolocation.watchPosition((data) => {
+// // point.style.transform = `rotate(${data.coords.heading}deg)`
+// console.log(data)
+// })
+
+// this should fire when signed in or new game clicked
+
+if(window.DeviceorientationEvent){
+
+  console.log('Device orientation is supported ')
+
+  window.addEventListener('deviceorientation', function(event) {
+    let alpha = event.alpha
+    let beta = event.beta
+    let gamma = event.gamma
+     point.style.transform = `rotate(${alpha}deg)`
+  });
+
+} else {
+  console.log('device orientation is NOT supported')
 }
