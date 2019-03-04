@@ -7,20 +7,26 @@ heading.innerHTML = 'LOCATION TEST'
 findLocationDiv.prepend(heading)
 
 let currentDiv = "login-page"
+let loggedIn = false
+let state = {}
 
 const loginDiv = document.querySelector('.login-page')
 const signUpDiv = document.querySelector('.sign-up')
 const orientateDiv = document.querySelector('.orientate')
 const gameplayDiv = document.querySelector('.gameplay')
 const scoreboardDiv = document.querySelector('.scoreboard')
+const signUpFormEl = document.querySelector('#signup_form')
+const welcomeEl = document.querySelector('#welcome')
+const locationEl = document.querySelector('#current-location')
+
+document.addEventListener('DOMContentLoaded', () => {
+    init()
+})
+
+// =============================================================================
 
 
 function visibilityFunction() {
-
-const addButton = () => {
-    const button = document.createElement('button')
-    button.innerText = "show my location"
-    findLocationDiv.append(button)
 
   switch (currentDiv) {
     case "login-page":
@@ -30,7 +36,9 @@ const addButton = () => {
     break;
 
     case "sign-up":
-    console.log("Hi Matt")
+    signUpDiv.id = 'is_hidden'
+    orientateDiv.id = 'is_visible'
+    currentDiv = 'orientate'
     break;
 
     case "orientate":
@@ -53,15 +61,29 @@ const addButton = () => {
 
     default:
     console.log("Hi person who I don't know!")
-  };
-}
+    };
+  }
 
-const getLocation = () => {
+document.addEventListener('click', event =>{
+  if(event.target.id === "go-to-sign-up"){
+    loginDiv.id = 'is_hidden'
+    signUpDiv.id = 'is_visible'
+    currentDiv = 'sign-up'
+  }
+})
+
+const addButton = () => {
+    const button = document.createElement('button')
+    button.innerText = "show my location"
+    findLocationDiv.append(button)
+  }
+
+const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition(showLocation);
 
 }
 
-const showLocation = (position) => {
+const showUserLocation = (position) => {
     const latlong = `${position.coords.latitude},${position.coords.longitude}`
     getAddressFromApi(latlong)
 }
@@ -69,21 +91,6 @@ const showLocation = (position) => {
 
 
 
-
-//
-const signUpFormEl = document.querySelector('#signup_form')
-const signUpDiv = document.querySelector('.sign-up')
-const welcomeEl = document.querySelector('#welcome')
-const locationEl = document.querySelector('#current-location')
-
-let loggedIn = false
-
-let state = {}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    init()
-})
 
 const addEventListerToSignUpForm = () => {
 
@@ -99,6 +106,7 @@ signUpFormEl.addEventListener('submit', (event) => {
 
 })
 }
+
 const addLocationToPage = (location) => {
    const p = document.createElement('p')
     p.innerText = `Your current location is: ${location}`
@@ -106,7 +114,7 @@ const addLocationToPage = (location) => {
 }
 
 const showWelcome = () => {
-    getLocation()
+    getUserLocation()
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
 
     welcomeEl.innerText = `Welcome ${state.current_user}`
@@ -163,4 +171,5 @@ if(window.DeviceorientationEvent){
 
 } else {
   console.log('device orientation is NOT supported')
+}
 }

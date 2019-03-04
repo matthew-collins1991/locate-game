@@ -29,7 +29,7 @@
         <br>
         <button onclick="visibilityFunction()" type="button" name="submit">Submit</button>
         <br>
-        <button onclick="visibilityFunction()" type="button" name="sign-up">Sign-up</button>
+        <button id = "go-to-sign-up" type="button" name="sign-up">Sign-up</button>
       </form>
     </div>
 
@@ -40,7 +40,7 @@
         <form id="signup_form">
             <input id="signup_name" type="text" name="name" placeholder="Name" />
             <input id="signup_username" type="text" name="username" placeholder="Username" />
-            <input type="submit" value="Sign Up!" />
+            <input onclick="visibilityFunction()" type="submit" value="Sign Up!" />
         </form>
 
     </div>
@@ -49,6 +49,7 @@
 <!-- Div to show when user is orientating -->
     <div class="orientate" id='is_hidden'>
         <h2 id= "welcome"></h2>
+        <button onclick="visibilityFunction()" type="button" name="orientation">Ready</button>
           <span><p id="current-location"></p></span>
 
     </div>
