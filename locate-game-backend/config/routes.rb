@@ -5,6 +5,7 @@
     namespace :api do
       namespace :v1 do
         resources :users
+        resources :games
       end
     end
   end
