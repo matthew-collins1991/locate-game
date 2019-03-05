@@ -3,7 +3,7 @@ const BASEURL =  'http://localhost:3000/api/v1'
 const findLocationDiv = document.querySelector('.find-location')
 
 const heading = document.createElement('h1')
-heading.innerHTML = 'LOCATION TEST'
+heading.innerHTML = 'Degrees of Separation!'
 findLocationDiv.prepend(heading)
 
 let currentDiv = "login-page"
@@ -22,8 +22,6 @@ const locationEl = document.querySelector('#current-location')
 document.addEventListener('DOMContentLoaded', () => {
     init()
 })
-
-// =============================================================================
 
 
 function visibilityFunction() {
@@ -89,9 +87,6 @@ const showUserLocation = (position) => {
 }
 
 
-
-
-
 const addEventListerToSignUpForm = () => {
 
 signUpFormEl.addEventListener('submit', (event) => {
@@ -136,40 +131,44 @@ const addUserToApi = (name, username) => {
 }
 
 
+
+const addPointerToPage = () => {
+    const point = document.createElement('img')
+    point.className = 'compass-point'
+    const gameSection = document.querySelector('.game-section')
+
+    point.src = 'image/compass.svg'
+    point.height = 150;
+    point.width = 150;
+
+    gameSection.appendChild(point)
+
+
+
+    // navigator.geolocation.watchPosition((data) => {
+    // // point.style.transform = `rotate(${data.coords.heading}deg)`
+    // console.log(data)
+    // })
+
+    // this should fire when signed in or new game clicked
+
+    if (window.DeviceorientationEvent) {
+
+        console.log('Device orientation is supported ')
+
+        window.addEventListener('deviceorientation', function (event) {
+            let alpha = event.alpha
+            let beta = event.beta
+            let gamma = event.gamma
+            point.style.transform = `rotate(${alpha}deg)`
+        });
+
+    } else {
+        console.log('device orientation is NOT supported')
+    }
+}
+
 const init = () => {
     // addButton()
     addEventListerToSignUpForm()
-const point = document.createElement('img')
-point.className = 'compass-point'
-const gameSection = document.querySelector('.game-section')
-
-point.src = 'image/compass.svg'
-point.height = 150;
-point.width = 150;
-
-gameSection.appendChild(point)
-
-
-
-// navigator.geolocation.watchPosition((data) => {
-// // point.style.transform = `rotate(${data.coords.heading}deg)`
-// console.log(data)
-// })
-
-// this should fire when signed in or new game clicked
-
-if(window.DeviceorientationEvent){
-
-  console.log('Device orientation is supported ')
-
-  window.addEventListener('deviceorientation', function(event) {
-    let alpha = event.alpha
-    let beta = event.beta
-    let gamma = event.gamma
-     point.style.transform = `rotate(${alpha}deg)`
-  });
-
-} else {
-  console.log('device orientation is NOT supported')
-}
 }
