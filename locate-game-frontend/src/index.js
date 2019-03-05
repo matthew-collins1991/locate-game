@@ -92,42 +92,30 @@ const addEventListerToSignUpForm = () => {
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
+      
     state.current_user = event.target.name.value
     loggedIn = !loggedIn
 
     if (loggedIn) { signUpDiv.style.display = 'none' }
 
     showWelcome()
+    addPointerToPage()
 
 })
 }
 
 const addLocationToPage = (location) => {
    const p = document.createElement('p')
-    p.innerText = `Your current location is: ${location}`
+    p.innerText = `${location}`
     findLocationDiv.append(p)
 }
 
 const showWelcome = () => {
+    
     getUserLocation()
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
 
     welcomeEl.innerText = `Welcome ${state.current_user}`
-}
-
-
-
-const addUserToApi = (name, username) => {
-    const options = {
-        method: 'POST',
-        headers: {
-            'Accepts': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({name, username})
-    }
-    return fetch(USERSURL, options)
-     .then(resp => resp.json())
 }
 
 
@@ -143,8 +131,6 @@ const addPointerToPage = () => {
 
     gameSection.appendChild(point)
 
-
-
     // navigator.geolocation.watchPosition((data) => {
     // // point.style.transform = `rotate(${data.coords.heading}deg)`
     // console.log(data)
@@ -153,22 +139,23 @@ const addPointerToPage = () => {
     // this should fire when signed in or new game clicked
 
     if (window.DeviceorientationEvent) {
-
         console.log('Device orientation is supported ')
-
         window.addEventListener('deviceorientation', function (event) {
             let alpha = event.alpha
             let beta = event.beta
             let gamma = event.gamma
             point.style.transform = `rotate(${alpha}deg)`
         });
-
     } else {
         console.log('device orientation is NOT supported')
     }
 }
 
+
+
+
+
+
 const init = () => {
-    // addButton()
     addEventListerToSignUpForm()
 }
