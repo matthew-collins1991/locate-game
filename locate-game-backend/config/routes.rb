@@ -6,6 +6,8 @@
       namespace :v1 do
         resources :users
         resources :games
+        resources :cities
+        resources :regions
       end
     end
   end
