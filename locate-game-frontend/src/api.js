@@ -1,3 +1,6 @@
+
+//funtion to add a new user to the API, is called from an event listener in the "sign up" page
+
 const addUserToApi = (name, username) => {
     const options = {
         method: 'POST',
@@ -24,3 +27,16 @@ const addUserToApi = (name, username) => {
             }
         })
 }
+
+
+
+ // function to get a user from the api 
+
+const getUserFromApi = () => {
+
+
+    
+}
+
+
+

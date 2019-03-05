@@ -11,7 +11,6 @@ let loggedIn = false
 let state = {}
 
 
-
 const loginDiv = document.querySelector('.login-page')
 const signUpDiv = document.querySelector('.sign-up')
 const orientateDiv = document.querySelector('.orientate')
@@ -24,7 +23,6 @@ const locationEl = document.querySelector('#current-location')
 document.addEventListener('DOMContentLoaded', () => {
     init()
 })
-
 
 function visibilityFunction() {
 
@@ -72,22 +70,6 @@ document.addEventListener('click', event =>{
   }
 })
 
-const addButton = () => {
-    const button = document.createElement('button')
-    button.innerText = "show my location"
-    findLocationDiv.append(button)
-  }
-
-const getUserLocation = () => {
-    navigator.geolocation.getCurrentPosition(showLocation);
-
-}
-
-const showUserLocation = (position) => {
-    const latlong = `${position.coords.latitude},${position.coords.longitude}`
-    getAddressFromApi(latlong)
-}
-
 
 const addEventListerToSignUpForm = () => {
 
@@ -115,8 +97,6 @@ const addLocationToPage = (location) => {
 const showWelcome = () => {
     
     getUserLocation()
-    // if (!loggedIn) { signUpDiv.style.display = 'none' }
-
     welcomeEl.innerText = `Welcome ${state.current_user}`
 }
 
