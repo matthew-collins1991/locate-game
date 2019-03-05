@@ -10,6 +10,8 @@ let currentDiv = "login-page"
 let loggedIn = false
 let state = {}
 
+
+
 const loginDiv = document.querySelector('.login-page')
 const signUpDiv = document.querySelector('.sign-up')
 const orientateDiv = document.querySelector('.orientate')
