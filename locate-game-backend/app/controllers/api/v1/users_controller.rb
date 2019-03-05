@@ -7,7 +7,8 @@ class Api::V1::UsersController < ApplicationController
     
       def create
         @user = User.new(name: params[:name], username: params[:username])
-        if @user.save
+        if @user.valid?
+          @user.save
           render json: @user
         else
           render json: { error: "Unable to create User." }, status: 400
