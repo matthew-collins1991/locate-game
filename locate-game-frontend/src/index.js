@@ -21,9 +21,15 @@ const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 
+
+// =============================================================================
+
+// on page load
 document.addEventListener('DOMContentLoaded', () => {
     init()
 })
+
+// =============================================================================
 
 
 function visibilityFunction() {
@@ -63,6 +69,8 @@ function visibilityFunction() {
     console.log("Hi person who I don't know!")
     };
   }
+
+  
 
 document.addEventListener('click', event =>{
   if(event.target.id === "go-to-sign-up"){
