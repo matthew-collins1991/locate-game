@@ -48,7 +48,7 @@ Region.create(region: "MID")
 City.create(name: "Leeds", region_id: 1, long:53.8008, lat: -1.5491)
 City.create(name: "Liverpool", region_id: 1, long:53.4084, lat: -2.9916)
 City.create(name: "Glasgow", region_id: 1, long:55.8642, lat: -4.2518)
-City.create(name: "Dubin", region_id: 1, long:53.3498, lat: -6.2603)
+City.create(name: "Dublin", region_id: 1, long:53.3498, lat: -6.2603)
 City.create(name: "Manchester", region_id: 1, long:53.4808, lat: -2.2426)
 
 # SW Region

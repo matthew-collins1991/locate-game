@@ -28,15 +28,38 @@ const addUserToApi = (name, username) => {
         })
 }
 
-
-
- // function to get a user from the api 
+// function to get a user from the api
 
 const getUserFromApi = () => {
 
 
-    
+
+}
+
+
+const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
+
+const storeRegions = (regions) =>{
+   allRegions.push(regions)
+   let index = randValue()
+   setTarget(index, state)
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
