@@ -1,5 +1,6 @@
 const USERSURL =  'http://localhost:3000/api/v1/users'
 const BASEURL =  'http://localhost:3000/api/v1'
+const REGIONURL = 'http://localhost:3000/api/v1/regions'
 const findLocationDiv = document.querySelector('.find-location')
 
 const heading = document.createElement('h1')
@@ -8,8 +9,16 @@ findLocationDiv.prepend(heading)
 
 let currentDiv = "login-page"
 let loggedIn = false
-let state = {}
+let allRegions = []
+let state = {
+  round: 1,
+  score: 0,
+  target: []
+}
 
+
+
+// =============================================================================
 
 
 const loginDiv = document.querySelector('.login-page')
@@ -20,6 +29,7 @@ const scoreboardDiv = document.querySelector('.scoreboard')
 const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
+const targetNameEl = document.querySelector("#target-name")
 
 
 // =============================================================================
@@ -29,9 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
     init()
 })
 
+const setTarget = (index, state) =>{
+  let round_index = state.round-1
+  let currentRegion = allRegions[0][round_index]
+  state.target = currentRegion.cities[index]
+  targetNameEl.innerText = `Find: ${state.target.name}`
+}
+
 // =============================================================================
 
 
+// on-click functionality in HTML changes which DIV is visible to the user.
 function visibilityFunction() {
 
   switch (currentDiv) {
@@ -45,12 +63,14 @@ function visibilityFunction() {
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
     currentDiv = 'orientate'
+    console.log(state.coords, 'hello')
     break;
 
     case "orientate":
     orientateDiv.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
+
     break;
 
     case "gameplay":
@@ -70,7 +90,7 @@ function visibilityFunction() {
     };
   }
 
-  
+
 
 document.addEventListener('click', event =>{
   if(event.target.id === "go-to-sign-up"){
@@ -80,29 +100,12 @@ document.addEventListener('click', event =>{
   }
 })
 
-const addButton = () => {
-    const button = document.createElement('button')
-    button.innerText = "show my location"
-    findLocationDiv.append(button)
-  }
-
-const getUserLocation = () => {
-    navigator.geolocation.getCurrentPosition(showLocation);
-
-}
-
-const showUserLocation = (position) => {
-    const latlong = `${position.coords.latitude},${position.coords.longitude}`
-    getAddressFromApi(latlong)
-}
-
-
 const addEventListerToSignUpForm = () => {
 
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
-      
+
     state.current_user = event.target.name.value
     loggedIn = !loggedIn
 
@@ -121,14 +124,48 @@ const addLocationToPage = (location) => {
 }
 
 const showWelcome = () => {
-    
-    getUserLocation()
+    getLocation()
+    currentDiv = "sign-up"
+    visibilityFunction()
+
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
 
     welcomeEl.innerText = `Welcome ${state.current_user}`
 }
 
+// =============================================================================
 
+// Gameplay Round functionality
+const currentRoundEl = document.querySelector('#round')
+const currentScoreEl = document.querySelector('#score')
+
+
+
+// get a random number between 0 and 4 to select city from
+const randValue = () => {
+  return Math.floor(Math.random() * 5);
+}
+
+const gameplayBtn = document.querySelector("#gameplay-btn")
+gameplayBtn.addEventListener("click", ()=>{
+  if (state.round < 5){
+    // ADD SCORING HERE
+    let roundScore = 35
+    ++state.round
+    state.score = state.score+roundScore
+  currentRoundEl.innerText = `Round: ${state.round}`
+  currentScoreEl.innerText = `Score: ${state.score}`
+  targetNameEl.innerText = `Find: ${state.target.name}`
+  let index = randValue()
+  setTarget(index, state)
+} else{
+visibilityFunction()
+}
+})
+
+
+
+// =============================================================================
 
 const addPointerToPage = () => {
     const point = document.createElement('img')
@@ -163,9 +200,7 @@ const addPointerToPage = () => {
 
 
 
-
-
-
 const init = () => {
     addEventListerToSignUpForm()
+    getRegions().then(storeRegions)
 }
