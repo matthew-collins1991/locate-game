@@ -1,5 +1,9 @@
+document.addEventListener('DOMContentLoaded', () => {
 
+})
 
+if (window.location.href.includes('ngrok'))
+  { BASEURL = 'https://eaeee1c0.ngrok.io/api/v1'
 
 if (window.location.href.includes('ngrok'))
 
@@ -11,17 +15,10 @@ if (window.location.href.includes('ngrok'))
 
 const USERSURL =  BASEURL + '/users'
 const REGIONURL = BASEURL + '/regions'
+
+
 const findLocationDiv = document.querySelector('.find-location')
 
-// const USERSURL =  'http://localhost:3000/api/v1/users'
-// const BASEURL =  'http://localhost:3000/api/v1'
-// const REGIONURL = 'http://localhost:3000/api/v1/regions'
-// const findLocationDiv = document.querySelector('orientate')
-
-
-const heading = document.createElement('h1')
-heading.innerHTML = 'Degrees of Separation!'
-// findLocationDiv.prepend(heading)
 
 let timerCount;
 let countDown;
@@ -49,22 +46,19 @@ const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const countInDiv = document.querySelector('.count-in-timer')
+const restartBtnEl = document.querySelector('#restart-btn')
 const timerDisplay = document.querySelector('.display_time_left')
-
-// add timer stuff
 
 
 // =============================================================================
 
 // on page load
-document.addEventListener('DOMContentLoaded', () => {
-    init()
-})
 
-const setTarget = (index, state) =>{
+
+const setTarget = (randomNum, state) =>{
   let round_index = state.round-1
   let currentRegion = allRegions[0][round_index]
-  state.target = currentRegion.cities[index]
+  state.target = currentRegion.cities[randomNum]
   targetNameEl.innerText = `Find: ${state.target.name}`
 }
 
@@ -85,13 +79,13 @@ function visibilityFunction() {
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
     currentDiv = 'orientate'
-    console.log(state.coords)
     break;
 
     case "orientate":
     orientateDiv.id = 'is_hidden'
     countInDiv.id = 'is_visible'
     gameplayDiv.id = 'is_hidden'
+    scoreboardDiv.id = 'is_hidden'
     currentDiv = 'count-in'
     countInTimer()
     break;
@@ -176,6 +170,39 @@ const currentScoreEl = document.querySelector('#score')
 
 
 // function to countown into each round
+<<<<<<< HEAD
+=======
+const countInTimer = () => {
+  if(state.round < 6){
+    countInDiv.innerHTML = ''
+    let counter = 3;
+    let gameCountIn = setInterval(function(){
+      if (counter === 0) {
+        countInDiv.innerHTML = `
+        <h1>GO!</h1>
+        `
+        --counter
+      } else if (counter === -1){
+        currentDiv = "count-in"
+        visibilityFunction()
+        clearInterval(gameCountIn);
+      } else{
+        countInDiv.innerHTML = `
+        <h1>${counter}</h1>
+        `
+        --counter
+      }
+
+    }, 1000);
+  } else{
+    currentDiv = "gameplay"
+    visibilityFunction()
+  }
+}
+
+
+
+>>>>>>> matt-branch
 
 // get a random number between 0 and 4 to select city from
 const randValue = () => {
@@ -185,8 +212,12 @@ const randValue = () => {
 
 const gameplayBtn = document.querySelector("#gameplay-btn")
 gameplayBtn.addEventListener("click", ()=>{
+<<<<<<< HEAD
 
   if (state.round < 5){
+=======
+  if (state.round < 6){
+>>>>>>> matt-branch
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
@@ -209,10 +240,13 @@ gameplayBtn.addEventListener("click", ()=>{
 
 } else{
 visibilityFunction()
+
 }
 })
 
+// =============================================================================
 
+<<<<<<< HEAD
 //==============================================================================
 // TIMERS
 function timer(seconds){
@@ -278,6 +312,17 @@ const countInTimer = () => {
   }
 }
 
+=======
+// SCOREBOARD FUNCTIONALITY
+
+// new game button
+restartBtnEl.addEventListener('click', () => {
+  state.round = 1
+  state.score = 0
+  currentDiv = "orientate"
+  visibilityFunction()
+} )
+>>>>>>> matt-branch
 
 // =============================================================================
 
@@ -345,3 +390,5 @@ const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
 }
+
+init()
