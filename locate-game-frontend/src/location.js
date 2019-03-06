@@ -38,8 +38,8 @@ const getTargetBearing = () => {
   let startLat = state.userLat
   let startLng = state.userLong
 
-  let destLat = parseFloat(state.target.long)
-  let destLng = parseFloat(state.target.lat)
+  let destLat = parseFloat(state.target.lat)
+  let destLng = parseFloat(state.target.long)
 
   bearing(startLat, startLng, destLat, destLng)
 }
@@ -70,7 +70,7 @@ function bearing(startLat, startLng, destLat, destLng){
   brng = toDegrees(brng);
   // return (brng + 360) % 360;
   state.targetBearing = Math.floor(((brng + 360) % 360));
-  
+
 }
 
 

@@ -22,7 +22,7 @@ const findLocationDiv = document.querySelector('.find-location')
 let timerCount;
 let countDown;
 let timerSeconds = 11;
-let currentDiv = "login-page"
+let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
 let state = {
@@ -50,6 +50,11 @@ const readyBtnEL = document.querySelector('#ready-btn')
 // =============================================================================
 
 // on page load
+const init = () => {
+    getRegions().then(storeRegions)
+}
+
+init()
 
 
 const setTarget = (randomNum, state) =>{
@@ -135,6 +140,7 @@ const getTargetBearingFirstRound = () => {
 
 const addEventListerToSignUpForm = () => {
 
+document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
@@ -149,7 +155,7 @@ signUpFormEl.addEventListener('submit', (event) => {
     bearingEventListener()
 
 })
-}
+
 
 const addLocationToPage = (location) => {
    const p = document.createElement('p')
@@ -206,8 +212,8 @@ function nextRound() {
 
   let index = randValue()
   setTarget(index, state)
-  
-  
+
+
 
 } else{
 visibilityFunction()
@@ -369,5 +375,3 @@ const init = () => {
     getRegions().then(storeRegions)
     getTargetBearingFirstRound()
 }
-
-
