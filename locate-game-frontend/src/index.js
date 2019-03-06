@@ -43,12 +43,13 @@ const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
-const countInDiv = document.querySelector('.count-in-timer')
+const countInDiv = document.querySelector('.counter-container')
 const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
 const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
-
+const title = document.querySelector('.header-bar')
+const logo = document.querySelector('.logo-cont')
 
 
 // =============================================================================
@@ -78,6 +79,8 @@ function visibilityFunction() {
     case "sign-up":
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
+    title.id = 'is_hidden'
+    logo.id ='is_hidden'
     currentDiv = 'orientate'
     break;
 
@@ -91,6 +94,7 @@ function visibilityFunction() {
     break;
 
     case "count-in":
+    // title.id = 'is_hidden'
     countInDiv.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
