@@ -25,7 +25,7 @@ heading.innerHTML = 'Degrees of Separation!'
 
 let timerCount;
 let countDown;
-let timerSeconds = 160;
+let timerSeconds = 11;
 let currentDiv = "login-page"
 let loggedIn = false
 let allRegions = []

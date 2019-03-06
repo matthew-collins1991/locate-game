@@ -77,5 +77,4 @@ function bearing(startLat, startLng, destLat, destLng){
 
 
 
-
 //
