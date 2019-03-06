@@ -182,10 +182,10 @@ const randValue = () => {
 }
 
 
-const gameplayBtn = document.querySelector("#gameplay-btn")
-gameplayBtn.addEventListener("click", ()=>{
+function nextRound() {
 
-  if (state.round < 5){
+
+  if (state.round <= 5){
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
@@ -196,7 +196,7 @@ gameplayBtn.addEventListener("click", ()=>{
     ++state.round
 
 
-    state.score = state.score+roundScore
+  state.score = state.score+roundScore
   currentRoundEl.innerText = `Round: ${state.round}`
   currentScoreEl.innerText = `Score: ${state.score}`
   targetNameEl.innerText = `Find: ${state.target.name}`
@@ -213,10 +213,14 @@ gameplayBtn.addEventListener("click", ()=>{
 visibilityFunction()
 
 }
-})
 
 // =============================================================================
 
+}
+
+
+const gameplayBtn = document.querySelector("#gameplay-btn")
+gameplayBtn.addEventListener("click", nextRound)
 //==============================================================================
 // TIMERS
 function timer(seconds){
@@ -246,15 +250,23 @@ function displayTimeLeft(seconds){
   const minutes = Math.floor(seconds/60)
   const remainderSeconds = seconds % 60
   const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
-  // if (display === '0')
-  timerDisplay.textContent = display
+   if (display === '00:00'){
+     timerDisplay.textContent = display
+     console.log('DONE!!')
+     // vibrate & end of round and change round 2
+      nextRound()
+   }else {
+     timerDisplay.textContent = display
+   }
+
+
 }
 
 
 // function count into each round
 
 const countInTimer = () => {
-  if(state.round < 5){
+  if(state.round <= 5){
     countInDiv.innerHTML = ''
     let counter = 3;
     let gameCountIn = setInterval(function(){
@@ -277,7 +289,9 @@ const countInTimer = () => {
 
     }, 1000);
   } else{
+
     currentDiv = "gameplay"
+
     visibilityFunction()
   }
 }
@@ -286,34 +300,40 @@ const countInTimer = () => {
 // =============================================================================
 
 const addPointerToPage = () => {
-    const point = document.createElement('img')
-    point.className = 'compass-point'
-    const pointerSection = document.querySelector('.pointer-section')
+    // const point = document.createElement('img')
+    // point.className = 'compass-point'
+    // const pointerSection = document.querySelector('.pointer-section')
 
-    point.src = 'image/compass.svg'
-    point.height = 150;
-    point.width = 150;
+     const compass = document.querySelector('.compass')
 
-    pointerSection.appendChild(point)
+
+    // point.src = 'image/arrowCompass.svg'
+    // point.height = 150;
+    // point.width = 150;
+
+    // pointerSection.appendChild(point)
 
     // navigator.geolocation.watchPosition((data) => {
     // // point.style.transform = `rotate(${data.coords.heading}deg)`
     // console.log(data)
     // })
 
+
+    window.addEventListener('deviceorientation', function (event) {
+          let alpha = event.alpha
+          let beta = event.beta
+          let gamma = event.gamma
+          compass.style.transform = `rotate(${alpha}deg)`
+      });
+
     // this should fire when signed in or new game clicked
 
-    if (window.DeviceorientationEvent) {
-        console.log('Device orientation is supported ')
-        window.addEventListener('deviceorientation', function (event) {
-            let alpha = event.alpha
-            let beta = event.beta
-            let gamma = event.gamma
-            point.style.transform = `rotate(${alpha}deg)`
-        });
-    } else {
-        console.log('device orientation is NOT supported')
-    }
+    // if (window.DeviceorientationEvent) {
+    //     console.log('Device orientation is supported ')
+    //
+    // } else {
+    //     console.log('device orientation is NOT supported')
+    // }
 }
 
 
