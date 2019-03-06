@@ -1,23 +1,19 @@
+document.addEventListener('DOMContentLoaded', () => {
 
-
+})
 
 if (window.location.href.includes('ngrok'))
+  { BASEURL = 'https://eaeee1c0.ngrok.io/api/v1'
 
-{ BASEURL = 'https://3b20b42e.ngrok.io/api/v1'
-
-} else {
-  BASEURL = 'http://localhost:3000/api/v1'
+  } else {
+    BASEURL = 'http://localhost:3000/api/v1'
 }
 
 const USERSURL =  BASEURL + '/users'
 const REGIONURL = BASEURL + '/regions'
+
+
 const findLocationDiv = document.querySelector('.find-location')
-
-// const USERSURL =  'http://localhost:3000/api/v1/users'
-// const BASEURL =  'http://localhost:3000/api/v1'
-// const REGIONURL = 'http://localhost:3000/api/v1/regions'
-// const findLocationDiv = document.querySelector('orientate')
-
 
 
 let currentDiv = "login-page"
@@ -49,9 +45,7 @@ const restartBtnEl = document.querySelector('#restart-btn')
 // =============================================================================
 
 // on page load
-document.addEventListener('DOMContentLoaded', () => {
-    init()
-})
+
 
 const setTarget = (randomNum, state) =>{
   let round_index = state.round-1
@@ -302,3 +296,5 @@ const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
 }
+
+init()
