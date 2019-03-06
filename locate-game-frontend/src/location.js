@@ -17,7 +17,7 @@ const getAddressFromApi = (coords) => {
      fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords}&key=AIzaSyAz2usdpA-kqhzeMH1MGwc-ZtmM28sQo30`)
       .then(resp => resp.json())
        .then(json => addLocationToState(json.results[5].formatted_address))
-        .then(getTargetBearing)
+        // .then(getTargetBearing)
 }
 
 const addLocationToState = (location) => {

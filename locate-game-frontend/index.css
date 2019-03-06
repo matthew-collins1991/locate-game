@@ -4,7 +4,6 @@
 *{
   font-family: 'Playfair Display', serif;
     box-sizing: border-box;
-
 }
 
 #is_visible{
@@ -136,7 +135,7 @@ html, body {
 .full-page-container{
     min-height: 100%;
     padding: 0px;
-    display: flex;
+    /* display: flex; */
 }
 
 .header-bar{
@@ -184,7 +183,7 @@ margin: auto;
 
 .count-in-timer{
 
-  margin: auto;  
+  margin: auto;
 }
 
 .compass{

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  init()
+  // init()
 })
 
 
@@ -32,7 +32,6 @@ let state = {
 }
 
 
-
 // =============================================================================
 
 const loginDiv = document.querySelector('.login-page')
@@ -46,15 +45,14 @@ const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const countInDiv = document.querySelector('.count-in-timer')
 const readyBtnEL = document.querySelector('#ready-btn')
+const timerDisplay = document.querySelector('.display_time_left')
+const gameplayBtnEl = document.querySelector('#gameplay-btn')
+const finalScoreEl = document.querySelector('#final-score')
+
+
 
 // =============================================================================
 
-// on page load
-const init = () => {
-    getRegions().then(storeRegions)
-}
-
-init()
 
 
 const setTarget = (randomNum, state) =>{
@@ -131,7 +129,6 @@ document.addEventListener('click', event =>{
 
 
 const getTargetBearingFirstRound = () => {
-
   readyBtnEL.addEventListener('click', () => {
     getTargetBearing()
   })
@@ -180,17 +177,18 @@ const currentRoundEl = document.querySelector('#round')
 const currentScoreEl = document.querySelector('#score')
 
 
-
-
 // get a random number between 0 and 4 to select city from
 const randValue = () => {
   return Math.floor(Math.random() * 5);
 }
 
 
-function nextRound() {
+const gameplayBtn = document.querySelector("#gameplay-btn")
+
+gameplayBtn.addEventListener("click", () => nextRound())
 
 
+const nextRound = () => {
   if (state.round <= 5){
     // ADD SCORING HERE
 
@@ -217,7 +215,7 @@ function nextRound() {
 
 } else{
 visibilityFunction()
-
+}
 }
 
 // =============================================================================
@@ -225,8 +223,7 @@ visibilityFunction()
 }
 
 
-const gameplayBtn = document.querySelector("#gameplay-btn")
-gameplayBtn.addEventListener("click", nextRound)
+
 //==============================================================================
 // TIMERS
 function timer(seconds){
@@ -280,12 +277,13 @@ const countInTimer = () => {
         countInDiv.innerHTML = `
         <h1>GO!</h1>
         `
-        timer(timerSeconds)
+
         --counter
       } else if (counter === -1){
         currentDiv = "count-in"
         visibilityFunction()
         clearInterval(gameCountIn);
+        timer(timerSeconds)
       } else{
         countInDiv.innerHTML = `
         <h1>${counter}</h1>
@@ -297,7 +295,6 @@ const countInTimer = () => {
   } else{
 
     currentDiv = "gameplay"
-
     visibilityFunction()
   }
 }
@@ -370,8 +367,12 @@ window.addEventListener("deviceorientation", deviceOrientationListener)
 })
 }
 
+
+
 const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
     getTargetBearingFirstRound()
 }
+
+init()
