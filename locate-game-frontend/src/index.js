@@ -1,7 +1,16 @@
-const USERSURL =  'http://localhost:3000/api/v1/users'
-const BASEURL =  'http://localhost:3000/api/v1'
-const REGIONURL = 'http://localhost:3000/api/v1/regions'
-const findLocationDiv = document.querySelector('orientate')
+
+
+if (window.location.href.includes('ngrok')) 
+
+{ BASEURL = 'https://3b20b42e.ngrok.io/api/v1' 
+
+} else {
+  BASEURL = 'http://localhost:3000/api/v1'
+}
+
+const USERSURL =  BASEURL + '/users'
+const REGIONURL = BASEURL + '/regions'
+const findLocationDiv = document.querySelector('.find-location')
 
 const heading = document.createElement('h1')
 heading.innerHTML = 'Degrees of Separation!'
@@ -62,7 +71,7 @@ function visibilityFunction() {
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
     currentDiv = 'orientate'
-    console.log(state.coords, 'hello')
+    console.log(state.coords)
     break;
 
     case "orientate":
@@ -114,13 +123,14 @@ signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
 
-    state.current_user = event.target.name.value
+    state.currentUser = event.target.name.value
     loggedIn = !loggedIn
 
     if (loggedIn) { signUpDiv.style.display = 'none' }
 
     showWelcome()
     addPointerToPage()
+    bearingEventListener()
 
 })
 }
@@ -138,7 +148,7 @@ const showWelcome = () => {
 
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
 
-    welcomeEl.innerText = `Welcome ${state.current_user}`
+    welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
 // =============================================================================
@@ -184,6 +194,7 @@ const countInTimer = () => {
 const randValue = () => {
   return Math.floor(Math.random() * 5);
 }
+
 
 const gameplayBtn = document.querySelector("#gameplay-btn")
 gameplayBtn.addEventListener("click", ()=>{
@@ -241,6 +252,33 @@ const addPointerToPage = () => {
     }
 }
 
+
+// callback function for bearing event listener
+    const  deviceOrientationListener = (event) =>  {
+      let alpha = event.alpha;
+      state.userHeading = 360 - alpha;
+    }
+
+
+//function to add and remove window event listener and log bearing
+
+const bearingEventListener = () => {
+window.addEventListener("deviceorientation", deviceOrientationListener)
+
+
+  buttonEl = document.createElement('button')
+  gameplayDiv.append(buttonEl)
+  buttonEl.innerText = 'SET BEARING'
+
+
+  buttonEl.addEventListener('click', () => {
+    window.removeEventListener("deviceorientation", deviceOrientationListener);
+    
+    let bearingTestEl = document.createElement('h1')
+    bearingTestEl.innerText = `HEADING IS ${Math.floor(state.userHeading)}`
+    document.body.prepend(bearingTestEl)
+})
+}
 
 
 const init = () => {
