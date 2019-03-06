@@ -68,7 +68,12 @@ margin: auto;
 
 .count-in-timer{
 
-  margin: auto;  
+  margin: auto;
+}
+
+#svg_1 {
+
+   transform-origin: 50% 50%;
 }
 
 .compass{
