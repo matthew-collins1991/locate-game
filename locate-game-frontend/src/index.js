@@ -308,6 +308,7 @@ const addPointerToPage = () => {
     // const pointerSection = document.querySelector('.pointer-section')
 
      const compass = document.querySelector('.compass')
+      const circle = document.querySelector('#svg_1')
 
 
     // point.src = 'image/arrowCompass.svg'
@@ -326,7 +327,7 @@ const addPointerToPage = () => {
           let alpha = event.alpha
           let beta = event.beta
           let gamma = event.gamma
-          compass.style.transform = `rotate(${alpha}deg)`
+          circle.style.transform = `rotate(${alpha}deg)`
       });
 
     // this should fire when signed in or new game clicked
