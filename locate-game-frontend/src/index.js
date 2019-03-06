@@ -2,12 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-if (window.location.href.includes('ngrok'))
-  { BASEURL = 'https://eaeee1c0.ngrok.io/api/v1'
+
 
 if (window.location.href.includes('ngrok'))
 
-{ BASEURL = 'https://3b20b42e.ngrok.io/api/v1'
+{ BASEURL = 'https://1dec02ea.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -169,40 +168,7 @@ const currentRoundEl = document.querySelector('#round')
 const currentScoreEl = document.querySelector('#score')
 
 
-// function to countown into each round
-<<<<<<< HEAD
-=======
-const countInTimer = () => {
-  if(state.round < 6){
-    countInDiv.innerHTML = ''
-    let counter = 3;
-    let gameCountIn = setInterval(function(){
-      if (counter === 0) {
-        countInDiv.innerHTML = `
-        <h1>GO!</h1>
-        `
-        --counter
-      } else if (counter === -1){
-        currentDiv = "count-in"
-        visibilityFunction()
-        clearInterval(gameCountIn);
-      } else{
-        countInDiv.innerHTML = `
-        <h1>${counter}</h1>
-        `
-        --counter
-      }
 
-    }, 1000);
-  } else{
-    currentDiv = "gameplay"
-    visibilityFunction()
-  }
-}
-
-
-
->>>>>>> matt-branch
 
 // get a random number between 0 and 4 to select city from
 const randValue = () => {
@@ -212,12 +178,8 @@ const randValue = () => {
 
 const gameplayBtn = document.querySelector("#gameplay-btn")
 gameplayBtn.addEventListener("click", ()=>{
-<<<<<<< HEAD
 
   if (state.round < 5){
-=======
-  if (state.round < 6){
->>>>>>> matt-branch
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
@@ -246,7 +208,6 @@ visibilityFunction()
 
 // =============================================================================
 
-<<<<<<< HEAD
 //==============================================================================
 // TIMERS
 function timer(seconds){
@@ -312,17 +273,6 @@ const countInTimer = () => {
   }
 }
 
-=======
-// SCOREBOARD FUNCTIONALITY
-
-// new game button
-restartBtnEl.addEventListener('click', () => {
-  state.round = 1
-  state.score = 0
-  currentDiv = "orientate"
-  visibilityFunction()
-} )
->>>>>>> matt-branch
 
 // =============================================================================
 
