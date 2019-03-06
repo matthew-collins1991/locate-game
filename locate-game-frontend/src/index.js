@@ -124,6 +124,7 @@ function visibilityFunction() {
   }
 
 
+
 document.addEventListener('click', event =>{
   if(event.target.id === "go-to-sign-up"){
     loginDiv.id = 'is_hidden'
