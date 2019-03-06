@@ -7,6 +7,9 @@ const heading = document.createElement('h1')
 heading.innerHTML = 'Degrees of Separation!'
 findLocationDiv.prepend(heading)
 
+let timerCount;
+let countDown;
+let timerSeconds = 10;
 let currentDiv = "login-page"
 let loggedIn = false
 let allRegions = []
@@ -29,7 +32,8 @@ const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
-
+const timerDisplay = document.querySelector('.display_time_left')
+const gameStartTimer = document.querySelector('.game_start_countdown')
 
 // =============================================================================
 
@@ -69,6 +73,7 @@ function visibilityFunction() {
     orientateDiv.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
+    gameStartCountdown(3)
 
     break;
 
@@ -76,6 +81,7 @@ function visibilityFunction() {
     gameplayDiv.id = 'is_hidden'
     scoreboardDiv.id = 'is_visible'
     currentDiv = 'scoreboard'
+
     break;
 
     case "scoreboard":
@@ -148,10 +154,17 @@ const randValue = () => {
 
 const gameplayBtn = document.querySelector("#gameplay-btn")
 gameplayBtn.addEventListener("click", ()=>{
+
   if (state.round < 5){
     // ADD SCORING HERE
+    gameStartCountdown(3)
+    gameStartTimer.id = 'is_visible'
+
     let roundScore = 35
+
     ++state.round
+
+
     state.score = state.score+roundScore
   currentRoundEl.innerText = `Round: ${state.round}`
   currentScoreEl.innerText = `Score: ${state.score}`
@@ -162,6 +175,77 @@ gameplayBtn.addEventListener("click", ()=>{
 visibilityFunction()
 }
 })
+
+
+//==============================================================================
+
+function timer(seconds){
+// clear any existing timers
+  clearInterval(timerCount)
+  const now = Date.now()
+  const then = now + seconds * 1000;
+  displayTimeLeft(seconds)
+
+  timerCount = setInterval(() => {
+    const secondsLeft = Math.round((then - Date.now())/ 1000)
+
+// check if it should stop
+
+    if(secondsLeft <= 0) {
+      clearInterval(timerCount)
+    }
+// display it
+    // timerDisplay.id = 'is_visible'
+    displayTimeLeft(secondsLeft)
+  },1000)
+
+}
+
+
+function displayTimeLeft(seconds){
+  const minutes = Math.floor(seconds/60)
+  const remainderSeconds = seconds % 60
+  const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
+
+  timerDisplay.textContent = display
+}
+
+// start cound down
+
+function gameStartCountdown(seconds){
+// clear any existing timers
+  clearInterval(countDown)
+  const now = Date.now()
+  const then = now + seconds * 1000;
+  displaySeconds(seconds)
+
+  countDown = setInterval(() => {
+    const secondsLeft = Math.round((then - Date.now())/ 1000)
+
+// check if it should stop
+
+    if(secondsLeft <= 0) {
+      clearInterval(countDown)
+      gameStartTimer.id = 'is_hidden'
+      // timerDisplay.id ='is_visible'
+      timer(timerSeconds)
+    }
+// display it
+    // timerDisplay.id ='is_hidden'
+    displaySeconds(secondsLeft)
+
+  },1000)
+
+}
+
+
+function displaySeconds(seconds){
+  // const minutes = Math.floor(seconds/60)
+  // const remainderSeconds = seconds % 60
+  const display = `${seconds}`
+  gameStartTimer.textContent = display
+}
+
 
 
 
