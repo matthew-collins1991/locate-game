@@ -38,8 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     init()
 })
 
-<<<<<<< HEAD
-=======
 const setTarget = (index, state) =>{
   let round_index = state.round-1
   let currentRegion = allRegions[0][round_index]
@@ -51,7 +49,6 @@ const setTarget = (index, state) =>{
 
 
 // on-click functionality in HTML changes which DIV is visible to the user.
->>>>>>> matt-branch
 function visibilityFunction() {
 
   switch (currentDiv) {
@@ -102,10 +99,7 @@ document.addEventListener('click', event =>{
   }
 })
 
-<<<<<<< HEAD
 
-=======
->>>>>>> matt-branch
 const addEventListerToSignUpForm = () => {
 
 signUpFormEl.addEventListener('submit', (event) => {
@@ -130,17 +124,12 @@ const addLocationToPage = (location) => {
 }
 
 const showWelcome = () => {
-<<<<<<< HEAD
-    
-    getUserLocation()
-=======
     getLocation()
     currentDiv = "sign-up"
     visibilityFunction()
 
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
 
->>>>>>> matt-branch
     welcomeEl.innerText = `Welcome ${state.current_user}`
 }
 
