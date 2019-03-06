@@ -338,10 +338,24 @@ const addPointerToPage = () => {
 
 
 // callback function for bearing event listener
-    const  deviceOrientationListener = (event) =>  {
-      let alpha = event.alpha;
-      state.userBearing = Math.floor(360 - alpha);
-    }
+const deviceOrientationListener = (event) => {
+  var alpha = event.alpha; //z axis rotation [0,360)
+
+
+  if (typeof event.webkitCompassHeading !== "undefined") {
+    alpha = event.webkitCompassHeading;
+    state.userBearing = alpha
+  }
+  else {
+    state.userBearing = 360 - alpha;
+  }
+
+  testHeadingEl.innerHTML = `Heading: ${Math.floor(state.userBearing)}`
+
+  document.body.prepend(testHeadingEl)
+  document.body.prepend(testTargetEl)
+  state.userBearing = Math.floor(360 - alpha);
+}
 
 
 //function to add and remove window event listener and log bearing
