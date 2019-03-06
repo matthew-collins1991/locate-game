@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Degrees of Seperation</title>
+
     <script defer src="./src/api.js">  </script>
-    <script async defer src="./src/location.js">  </script>
-    <script defer src="./src/map.js">  </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB67HJnfJOIlyBoeagBpfvIzXniJaql1dA">
-    </script>
+    <script defer src="./src/location.js">  </script>
     <script defer src="./src/index.js">  </script>
 
+
     <link rel="stylesheet" href="index.css">
+    <link href='https://fonts.googleapis.com/css?family=Exo+2:300' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -22,40 +21,36 @@
       <h1>Degrees of Separation</h1>
     </div>
 
-<!-- Div to show user log-in page -->
-    <div class="login-page" id='is_visible'>
-      <h2>Log in</h2>
-      <form class="login" action="index.html" method="post">
-        <label for="username">Username</label>
-        <input type="text" name="username" value="">
-        <br>
-        <button onclick="visibilityFunction()" type="button" name="submit">Submit</button>
-        <br>
-        <button id = "go-to-sign-up" type="button" name="sign-up">Sign-up</button>
-      </form>
-    </div>
-
 
 <!-- Div to show when user is filling out sign-in form -->
-    <div class="sign-up" id='is_hidden'>
+    <div class="sign-up" id='is_visible'>
         <h3>Sign up!</h3>
         <form id="signup_form">
             <input id="signup_name" type="text" name="name" placeholder="Name" />
             <input id="signup_username" type="text" name="username" placeholder="Username" />
-            <input type="submit" value="Sign Up!" />
-        </form>
+            <br>
+            <br>
+            <a id="sign-up-link" class="button" type="submit" value="Sign Up!">Sign Up!</a>
+            <input id="sign-up-submit" type="submit" value="yo!" style="display: none;"/>
 
+        </form>
+<br>
     </div>
 
 
 <!-- Div to show when user is orientating -->
     <div class="orientate" id='is_hidden'>
         <h2 id= "welcome"></h2>
-        <div id="orientate-map">
+        <br>
+        <h2>Orientate Yourself!</h2>
+        <div class="pointer-section">
 
         </div>
-        <button  id="ready-btn" onclick="visibilityFunction()" type="button" name="orientation">Ready</button>
-          <span><p id="current-location"></p></span>
+        <br>
+            <span><p id="current-location"></p></span>
+        <br>
+        <a onclick="visibilityFunction()" class="button" type="button" name="orientation">Ready</a>
+
 
     </div>
 
@@ -82,19 +77,21 @@
       <div class="pointer-section">
           <!-- SVG  -->
 
-          <svg  width="580" height="400" xmlns="http://www.w3.org/2000/svg">
+          <svg class='compass' width="400" height="400" xmlns="http://www.w3.org/2000/svg">
            <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
-           <g class='compass'>
+           <g id="svg_1">
             <title>Layer 1</title>
-            <ellipse opacity="0.97" stroke-dasharray="5,5" ry="106.5" rx="112.5" id="svg_1" cy="191.9375" cx="286" stroke-width="14.5" stroke="#ffffff" fill="#000000" opacity="0"/>
-            <ellipse id="svg_4" cy="142.4375" cx="616.5" fill-opacity="0" stroke-opacity="null" stroke-width="9.5" stroke="#000" fill="#fff"/>
+            <ellipse opacity="0.97" stroke-dasharray="5,5" ry="112.5" rx="112.5" cy="200" cx="200" stroke-width="14.5" stroke="#ffffff" fill="#000000" opacity="0"/>
+            <ellipse id="svg_4" cy="200" cx="200" fill-opacity="0" stroke-opacity="null" stroke-width="9.5" stroke="#000" fill="#fff"/>
 
 
            </g>
            <!--arrow and degree  -->
            <g>
-              <ellipse ry="8.5" rx="8.5" id="svg_5" cy="149.9375" cx="325" fill-opacity="null" stroke-opacity="null" stroke-width="4" stroke="#000" fill="#fff"/>
-               <path stroke="#000000" transform="rotate(-89.6724624633789 285.564453125,201.6503143310547) " id="svg_7" d="m292.859883,201.650328l-72.243433,-57.492779l129.896014,57.492779l-129.896014,57.492748l72.243433,-57.492748z" fill-opacity="null" stroke-width="6.5" fill="#fff"/>
+
+              <ellipse ry="8.5" rx="8.5" id="svg_5" cy="150" cx="235" fill-opacity="null" stroke-opacity="null" stroke-width="4" stroke="#000" fill="#fff"/>
+               <path stroke="#000000" style="transform: translate(-3px, 86px) rotate(-90deg); transform-origin: center;" id="svg_7" d="m292.859883,201.650328l-72.243433,-57.492779l129.896014,57.492779l-129.896014,57.492748l72.243433,-57.492748z" fill-opacity="null" stroke-width="6.5" fill="#fff"/>
+
            </g>
           </svg>
 
@@ -104,9 +101,9 @@
           <h2 class='game_start_countdown' id='is_visible'></h2>
       <br>
       <h1 id="target-name"></h1>
-      <button id="gameplay-btn" type="button" name="select-location">CONFIRM</button>
-
-
+      <!-- <button id="gameplay-btn" type="button" name="select-location">CONFIRM</button> -->
+      <a id="gameplay-btn" class="button" type="button" name="select-location">CONFIRM</a>
+      <br>
     </div>
 
     <!-- =========================================================================== -->
@@ -143,7 +140,8 @@
     </tbody>
 </table>
 <br>
-<button id="restart-btn" type="button" name="restart">New Game</button>
+
+<a id="restart-btn" class="button" type="button" name="restart">New Game</a>
 
     </div>
 

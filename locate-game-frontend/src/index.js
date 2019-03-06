@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  init()
+  // init()
 })
 
 
@@ -22,7 +22,7 @@ const findLocationDiv = document.querySelector('.find-location')
 let timerCount;
 let countDown;
 let timerSeconds = 11;
-let currentDiv = "login-page"
+let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
 let state = {
@@ -30,7 +30,6 @@ let state = {
   score: 0,
   target: []
 }
-
 
 
 // =============================================================================
@@ -49,10 +48,14 @@ const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
 const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c88c18e8773355a6911caf620513e0d1793c5842
 
 // =============================================================================
 
-// on page load
 
 
 const setTarget = (randomNum, state) =>{
@@ -129,7 +132,6 @@ document.addEventListener('click', event =>{
 
 
 const getTargetBearingFirstRound = () => {
-
   readyBtnEL.addEventListener('click', () => {
     getTargetBearing()
   })
@@ -138,6 +140,7 @@ const getTargetBearingFirstRound = () => {
 
 const addEventListerToSignUpForm = () => {
 
+document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
@@ -152,7 +155,7 @@ signUpFormEl.addEventListener('submit', (event) => {
     bearingEventListener()
 
 })
-}
+
 
 const addLocationToPage = (location) => {
    const p = document.createElement('p')
@@ -177,8 +180,6 @@ const currentRoundEl = document.querySelector('#round')
 const currentScoreEl = document.querySelector('#score')
 
 
-
-
 // get a random number between 0 and 4 to select city from
 const randValue = () => {
   return Math.floor(Math.random() * 5);
@@ -192,6 +193,12 @@ function nextRound() {
 
   
   
+const gameplayBtn = document.querySelector("#gameplay-btn")
+
+gameplayBtn.addEventListener("click", () => nextRound())
+
+
+const nextRound = () => {
   if (state.round <= 5){
     
     bearingEventListener()
@@ -234,8 +241,7 @@ visibilityFunction()
 }
 
 
-const gameplayBtn = document.querySelector("#gameplay-btn")
-gameplayBtn.addEventListener("click", nextRound)
+
 //==============================================================================
 // TIMERS
 function timer(seconds){
@@ -289,12 +295,13 @@ const countInTimer = () => {
         countInDiv.innerHTML = `
         <h1>GO!</h1>
         `
-        timer(timerSeconds)
+
         --counter
       } else if (counter === -1){
         currentDiv = "count-in"
         visibilityFunction()
         clearInterval(gameCountIn);
+        timer(timerSeconds)
       } else{
         countInDiv.innerHTML = `
         <h1>${counter}</h1>
@@ -306,7 +313,6 @@ const countInTimer = () => {
   } else{
 
     currentDiv = "gameplay"
-
     visibilityFunction()
   }
 }
@@ -320,6 +326,7 @@ const addPointerToPage = () => {
     // const pointerSection = document.querySelector('.pointer-section')
 
      const compass = document.querySelector('.compass')
+      const circle = document.querySelector('#svg_1')
 
 
     // point.src = 'image/arrowCompass.svg'
@@ -338,7 +345,7 @@ const addPointerToPage = () => {
           let alpha = event.alpha
           let beta = event.beta
           let gamma = event.gamma
-          compass.style.transform = `rotate(${alpha}deg)`
+          circle.style.transform = `rotate(${alpha}deg)`
       });
 
     // this should fire when signed in or new game clicked
@@ -375,10 +382,12 @@ const bearingEventListener = () => {
 })
 }
 
+
+
 const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
     getTargetBearingFirstRound()
 }
 
-
+init()

@@ -33,6 +33,11 @@ const addUserToApi = (name, username) => {
 const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
 
 const storeRegions = (regions) =>{
+  const randValue = () => {
+    return Math.floor(Math.random() * 5);
+  }
+
+
    allRegions.push(regions)
    let randomNum = randValue()
    setTarget(randomNum, state)
