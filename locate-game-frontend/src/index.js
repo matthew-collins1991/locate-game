@@ -32,9 +32,7 @@ let state = {
 }
 
 
-function test(bearing, heading){
-return Math.abs(((((bearing - heading) % 360) + 540) % 360) - 180)
-}
+
 
 // =============================================================================
 
@@ -52,11 +50,8 @@ const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
 const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
-<<<<<<< HEAD
-=======
 
 
->>>>>>> c88c18e8773355a6911caf620513e0d1793c5842
 
 // =============================================================================
 
@@ -142,9 +137,11 @@ const getTargetBearingFirstRound = () => {
 
 }
 
-const addEventListerToSignUpForm = () => {
 
 document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
+
+
+const addEventListerToSignUpForm = () => {
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
@@ -159,6 +156,7 @@ signUpFormEl.addEventListener('submit', (event) => {
     bearingEventListener()
 
 })
+}
 
 
 const addLocationToPage = (location) => {
@@ -190,23 +188,15 @@ const randValue = () => {
 }
 
 
-function nextRound() {
-
-  getTargetBearing()
-  let roundScore = 0
-
-
-
-const gameplayBtn = document.querySelector("#gameplay-btn")
-
-gameplayBtn.addEventListener("click", () => nextRound())
-
+gameplayBtnEl.addEventListener("click", () => nextRound())
 
 const nextRound = () => {
   if (state.round <= 5){
 
     bearingEventListener()
 
+    getTargetBearing()
+    let roundScore = 0
 
     // ADD SCORING HERE
 
@@ -233,15 +223,9 @@ const nextRound = () => {
   finalScoreEl.innerText = `Your score: ${state.score}`
 
 
-} else{
-visibilityFunction()
-
-
-
-}
-
-// =============================================================================
-
+  } else{
+    visibilityFunction()
+  }
 }
 
 
@@ -381,9 +365,9 @@ const bearingEventListener = () => {
   window.addEventListener("deviceorientation", deviceOrientationListener)
 
 
-  gameplayBtnEl.addEventListener('click', () => {
-    // window.removeEventListener("deviceorientation", deviceOrientationListener);
-})
+//   gameplayBtnEl.addEventListener('click', () => {
+//     // window.removeEventListener("deviceorientation", deviceOrientationListener);
+// })
 }
 
 
