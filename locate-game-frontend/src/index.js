@@ -25,7 +25,7 @@ heading.innerHTML = 'Degrees of Separation!'
 
 let timerCount;
 let countDown;
-let timerSeconds = 10;
+let timerSeconds = 11;
 let currentDiv = "login-page"
 let loggedIn = false
 let allRegions = []
@@ -48,6 +48,10 @@ const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
+const countInDiv = document.querySelector('.count-in-timer')
+const timerDisplay = document.querySelector('.display_time_left')
+
+// add timer stuff
 
 
 // =============================================================================
@@ -96,7 +100,7 @@ function visibilityFunction() {
     countInDiv.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
-    gameStartCountdown(3)
+    //gameStartCountdown(3)
 
     break;
 
@@ -172,36 +176,6 @@ const currentScoreEl = document.querySelector('#score')
 
 
 // function to countown into each round
-const countInTimer = () => {
-  if(state.round < 5){
-    countInDiv.innerHTML = ''
-    let counter = 3;
-    let gameCountIn = setInterval(function(){
-      if (counter === 0) {
-        countInDiv.innerHTML = `
-        <h1>GO!</h1>
-        `
-        --counter
-      } else if (counter === -1){
-        currentDiv = "count-in"
-        visibilityFunction()
-        clearInterval(gameCountIn);
-      } else{
-        countInDiv.innerHTML = `
-        <h1>${counter}</h1>
-        `
-        --counter
-      }
-
-    }, 1000);
-  } else{
-    currentDiv = "gameplay"
-    visibilityFunction()
-  }
-}
-
-
-
 
 // get a random number between 0 and 4 to select city from
 const randValue = () => {
@@ -214,8 +188,9 @@ gameplayBtn.addEventListener("click", ()=>{
 
   if (state.round < 5){
     // ADD SCORING HERE
-    gameStartCountdown(3)
-    gameStartTimer.id = 'is_visible'
+
+    // gameStartCountdown(3)
+    // gameStartTimer.id = 'is_visible'
 
     let roundScore = 35
 
@@ -239,7 +214,7 @@ visibilityFunction()
 
 
 //==============================================================================
-
+// TIMERS
 function timer(seconds){
 // clear any existing timers
   clearInterval(timerCount)
@@ -267,47 +242,41 @@ function displayTimeLeft(seconds){
   const minutes = Math.floor(seconds/60)
   const remainderSeconds = seconds % 60
   const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
-
+  // if (display === '0')
   timerDisplay.textContent = display
 }
 
-// start cound down
 
-function gameStartCountdown(seconds){
-// clear any existing timers
-  clearInterval(countDown)
-  const now = Date.now()
-  const then = now + seconds * 1000;
-  displaySeconds(seconds)
+// function count into each round
 
-  countDown = setInterval(() => {
-    const secondsLeft = Math.round((then - Date.now())/ 1000)
+const countInTimer = () => {
+  if(state.round < 5){
+    countInDiv.innerHTML = ''
+    let counter = 3;
+    let gameCountIn = setInterval(function(){
+      if (counter === 0) {
+        countInDiv.innerHTML = `
+        <h1>GO!</h1>
+        `
+        timer(timerSeconds)
+        --counter
+      } else if (counter === -1){
+        currentDiv = "count-in"
+        visibilityFunction()
+        clearInterval(gameCountIn);
+      } else{
+        countInDiv.innerHTML = `
+        <h1>${counter}</h1>
+        `
+        --counter
+      }
 
-// check if it should stop
-
-    if(secondsLeft <= 0) {
-      clearInterval(countDown)
-      gameStartTimer.id = 'is_hidden'
-      // timerDisplay.id ='is_visible'
-      timer(timerSeconds)
-    }
-// display it
-    // timerDisplay.id ='is_hidden'
-    displaySeconds(secondsLeft)
-
-  },1000)
-
+    }, 1000);
+  } else{
+    currentDiv = "gameplay"
+    visibilityFunction()
+  }
 }
-
-
-function displaySeconds(seconds){
-  // const minutes = Math.floor(seconds/60)
-  // const remainderSeconds = seconds % 60
-  const display = `${seconds}`
-  gameStartTimer.textContent = display
-}
-
-
 
 
 // =============================================================================
