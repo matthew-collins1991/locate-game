@@ -46,6 +46,9 @@ const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const countInDiv = document.querySelector('.count-in-timer')
 const readyBtnEL = document.querySelector('#ready-btn')
+const timerDisplay = document.querySelector('.display_time_left')
+const gameplayBtnEl = document.querySelector('#gameplay-btn')
+const finalScoreEl = document.querySelector('#final-score')
 
 // =============================================================================
 
@@ -183,17 +186,26 @@ const randValue = () => {
 
 
 function nextRound() {
+  
+  getTargetBearing()
+  let roundScore = 0
 
-
+  
+  
   if (state.round <= 5){
+    
+    bearingEventListener()
+
+    
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
     // gameStartTimer.id = 'is_visible'
 
-    let roundScore = 35
 
     ++state.round
+
+    roundScore = makeScorePositive(state.targetBearing - state.userBearing)
 
 
   state.score = state.score+roundScore
@@ -202,15 +214,18 @@ function nextRound() {
   targetNameEl.innerText = `Find: ${state.target.name}`
   currentDiv = "orientate"
   visibilityFunction()
-  getTargetBearing()
-
+  
   let index = randValue()
   setTarget(index, state)
   
+
+  finalScoreEl.innerText = `Your score: ${state.score}`
   
 
 } else{
 visibilityFunction()
+
+
 
 }
 
@@ -346,21 +361,17 @@ const addPointerToPage = () => {
 
 //function to add and remove window event listener and log bearing
 
+// callback function to make sure the score is always positive 
+const makeScorePositive = (i) => {
+  return Math.sqrt(Math.pow(i, 2))
+}
+
 const bearingEventListener = () => {
-window.addEventListener("deviceorientation", deviceOrientationListener)
+  window.addEventListener("deviceorientation", deviceOrientationListener)
 
 
-  buttonEl = document.createElement('button')
-  gameplayDiv.append(buttonEl)
-  buttonEl.innerText = 'SET BEARING'
-
-
-  buttonEl.addEventListener('click', () => {
-    window.removeEventListener("deviceorientation", deviceOrientationListener);
-
-    let bearingTestEl = document.createElement('h1')
-    bearingTestEl.innerText = `Score for this round is ${state.targetBearing - state.userBearing}`
-    document.body.prepend(bearingTestEl)
+  gameplayBtnEl.addEventListener('click', () => {
+    // window.removeEventListener("deviceorientation", deviceOrientationListener);
 })
 }
 
