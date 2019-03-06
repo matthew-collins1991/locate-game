@@ -213,13 +213,13 @@ visibilityFunction()
 const addPointerToPage = () => {
     const point = document.createElement('img')
     point.className = 'compass-point'
-    const gameSection = document.querySelector('.game-section')
+    const pointerSection = document.querySelector('.pointer-section')
 
     point.src = 'image/compass.svg'
     point.height = 150;
     point.width = 150;
 
-    // gameSection.appendChild(point)
+    pointerSection.appendChild(point)
 
     // navigator.geolocation.watchPosition((data) => {
     // // point.style.transform = `rotate(${data.coords.heading}deg)`
