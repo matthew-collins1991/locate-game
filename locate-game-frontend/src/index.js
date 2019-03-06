@@ -34,6 +34,11 @@ let state = {
 
 
 
+
+float getDifference(float a1, float a2) {
+    return Math.min((a1-a2)<0?a1-a2+360:a1-a2, (a2-a1)<0?a2-a1+360:a2-a1)
+}
+
 // =============================================================================
 
 const loginDiv = document.querySelector('.login-page')
@@ -186,16 +191,34 @@ const randValue = () => {
 }
 
 
+<<<<<<< HEAD
 gameplayBtnEl.addEventListener("click", () => nextRound())
+=======
+function nextRound() {
+  
+  getTargetBearing()
+  let roundScore = 0
+
+  
+  
+const gameplayBtn = document.querySelector("#gameplay-btn")
+
+gameplayBtn.addEventListener("click", () => nextRound())
+
+>>>>>>> parent of 97ee316... no changes
 
 const nextRound = () => {
   if (state.round <= 5){
-
+    
     bearingEventListener()
 
+<<<<<<< HEAD
     getTargetBearing()
     let roundScore = 0
 
+=======
+    
+>>>>>>> parent of 97ee316... no changes
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
@@ -213,13 +236,13 @@ const nextRound = () => {
   targetNameEl.innerText = `Find: ${state.target.name}`
   currentDiv = "orientate"
   visibilityFunction()
-
+  
   let index = randValue()
   setTarget(index, state)
-
+  
 
   finalScoreEl.innerText = `Your score: ${state.score}`
-
+  
 
   } else{
     visibilityFunction()
@@ -354,7 +377,7 @@ const addPointerToPage = () => {
 
 //function to add and remove window event listener and log bearing
 
-// callback function to make sure the score is always positive
+// callback function to make sure the score is always positive 
 const makeScorePositive = (i) => {
   return Math.sqrt(Math.pow(i, 2))
 }
