@@ -336,11 +336,12 @@ const addPointerToPage = () => {
     // }
 }
 
+let testHeadingEl = document.createElement('h1')
+
 
 // callback function for bearing event listener
 const deviceOrientationListener = (event) => {
-  var alpha = event.alpha; //z axis rotation [0,360)
-
+  var alpha = event.alpha;
 
   if (typeof event.webkitCompassHeading !== "undefined") {
     alpha = event.webkitCompassHeading;
@@ -366,12 +367,19 @@ const makeScorePositive = (i) => {
 }
 
 const bearingEventListener = () => {
-  window.addEventListener("deviceorientation", deviceOrientationListener)
+  if (window.DeviceOrientationAbsoluteEvent) {
+    window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
+  }
+  else if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", deviceOrientationListener);
+  }
+  else {
+    alert("Sorry, try again on a compatible mobile device!");
+  }
 
 
-//   gameplayBtnEl.addEventListener('click', () => {
-//     // window.removeEventListener("deviceorientation", deviceOrientationListener);
-// })
+
+
 }
 
 // ==============================================================================
