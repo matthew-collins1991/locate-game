@@ -32,6 +32,15 @@ let state = {
 }
 
 
+function test(bearing, heading){
+return Math.abs(((((bearing - heading) % 360) + 540) % 360) - 180)
+}
+
+
+float getDifference(float a1, float a2) {
+    return Math.min((a1-a2)<0?a1-a2+360:a1-a2, (a2-a1)<0?a2-a1+360:a2-a1)
+}
+
 // =============================================================================
 
 const loginDiv = document.querySelector('.login-page')
