@@ -17,7 +17,7 @@ const getAddressFromApi = (coords) => {
      fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords}&key=AIzaSyAz2usdpA-kqhzeMH1MGwc-ZtmM28sQo30`)
       .then(resp => resp.json())
        .then(json => addLocationToState(json.results[5].formatted_address))
-        .then(initMap)
+        .then(getTargetBearing)
 }
 
 const addLocationToState = (location) => {
@@ -34,14 +34,12 @@ const addLocationToState = (location) => {
 
 // =============================================================================
 
-function getLatandLongOfUserAndTarget(){
+const getTargetBearing = () => {
   let startLat = state.userLat
   let startLng = state.userLong
 
   let destLat = parseFloat(state.target.long)
   let destLng = parseFloat(state.target.lat)
-
-console.log(startLat, startLng, destLat, destLng);
 
   bearing(startLat, startLng, destLat, destLng)
 }
@@ -71,7 +69,8 @@ function bearing(startLat, startLng, destLat, destLng){
   brng = Math.atan2(y, x);
   brng = toDegrees(brng);
   // return (brng + 360) % 360;
-  console.log((brng + 360) % 360);
+  state.targetBearing = Math.floor(((brng + 360) % 360));
+  
 }
 
 

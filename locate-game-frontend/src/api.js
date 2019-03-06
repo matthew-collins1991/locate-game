@@ -28,13 +28,6 @@ const addUserToApi = (name, username) => {
         })
 }
 
-// function to get a user from the api
-
-const getUserFromApi = () => {
-
-
-
-}
 
 
 const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
