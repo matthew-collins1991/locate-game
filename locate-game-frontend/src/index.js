@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // init()
+  init()
 })
-
 
 
 if (window.location.href.includes('ngrok'))
@@ -408,4 +407,3 @@ const init = () => {
     getTargetBearingFirstRound()
 }
 
-init()
