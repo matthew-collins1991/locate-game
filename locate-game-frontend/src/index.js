@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 if (window.location.href.includes('ngrok'))
 
-{ BASEURL = 'https://1dec02ea.ngrok.io/api/v1'
+{
+  BASEURL = 'https://a85bb94b.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
