@@ -41,8 +41,8 @@ const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
 
 const storeRegions = (regions) =>{
    allRegions.push(regions)
-   let index = randValue()
-   setTarget(index, state)
+   let randomNum = randValue()
+   setTarget(randomNum, state)
 }
 
 

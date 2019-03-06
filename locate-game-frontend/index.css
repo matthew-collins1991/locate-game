@@ -28,6 +28,12 @@ html, body {
     padding: 0px;
 }
 
+.header-bar{
+padding: 10px;
+background-color: #383838;
+color: 	#E0E0E0;
+}
+
 .login-page{
 padding: 25px;
 }

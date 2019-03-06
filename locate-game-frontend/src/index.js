@@ -1,11 +1,7 @@
 const USERSURL =  'http://localhost:3000/api/v1/users'
 const BASEURL =  'http://localhost:3000/api/v1'
 const REGIONURL = 'http://localhost:3000/api/v1/regions'
-const findLocationDiv = document.querySelector('orientate')
 
-const heading = document.createElement('h1')
-heading.innerHTML = 'Degrees of Separation!'
-// findLocationDiv.prepend(heading)
 
 let currentDiv = "login-page"
 let loggedIn = false
@@ -30,6 +26,8 @@ const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const countInDiv = document.querySelector('.count-in-timer')
+const restartBtnEl = document.querySelector('#restart-btn')
+
 
 // =============================================================================
 
@@ -38,10 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     init()
 })
 
-const setTarget = (index, state) =>{
+const setTarget = (randomNum, state) =>{
   let round_index = state.round-1
   let currentRegion = allRegions[0][round_index]
-  state.target = currentRegion.cities[index]
+  state.target = currentRegion.cities[randomNum]
   targetNameEl.innerText = `Find: ${state.target.name}`
 }
 
@@ -62,13 +60,13 @@ function visibilityFunction() {
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
     currentDiv = 'orientate'
-    console.log(state.coords, 'hello')
     break;
 
     case "orientate":
     orientateDiv.id = 'is_hidden'
     countInDiv.id = 'is_visible'
     gameplayDiv.id = 'is_hidden'
+    scoreboardDiv.id = 'is_hidden'
     currentDiv = 'count-in'
     countInTimer()
     break;
@@ -150,7 +148,7 @@ const currentScoreEl = document.querySelector('#score')
 
 // function to countown into each round
 const countInTimer = () => {
-  if(state.round < 5){
+  if(state.round < 6){
     countInDiv.innerHTML = ''
     let counter = 3;
     let gameCountIn = setInterval(function(){
@@ -187,7 +185,7 @@ const randValue = () => {
 
 const gameplayBtn = document.querySelector("#gameplay-btn")
 gameplayBtn.addEventListener("click", ()=>{
-  if (state.round < 5){
+  if (state.round < 6){
     // ADD SCORING HERE
     let roundScore = 35
     ++state.round
@@ -203,10 +201,21 @@ gameplayBtn.addEventListener("click", ()=>{
 
 } else{
 visibilityFunction()
+
 }
 })
 
+// =============================================================================
 
+// SCOREBOARD FUNCTIONALITY
+
+// new game button
+restartBtnEl.addEventListener('click', () => {
+  state.round = 1
+  state.score = 0
+  currentDiv = "orientate"
+  visibilityFunction()
+} )
 
 // =============================================================================
 
