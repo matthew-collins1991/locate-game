@@ -1,11 +1,27 @@
-const USERSURL =  'http://localhost:3000/api/v1/users'
-const BASEURL =  'http://localhost:3000/api/v1'
-const REGIONURL = 'http://localhost:3000/api/v1/regions'
+
+
+
+if (window.location.href.includes('ngrok')) 
+
+{ BASEURL = 'https://3b20b42e.ngrok.io/api/v1' 
+
+} else {
+  BASEURL = 'http://localhost:3000/api/v1'
+}
+
+const USERSURL =  BASEURL + '/users'
+const REGIONURL = BASEURL + '/regions'
 const findLocationDiv = document.querySelector('.find-location')
+
+// const USERSURL =  'http://localhost:3000/api/v1/users'
+// const BASEURL =  'http://localhost:3000/api/v1'
+// const REGIONURL = 'http://localhost:3000/api/v1/regions'
+// const findLocationDiv = document.querySelector('orientate')
+
 
 const heading = document.createElement('h1')
 heading.innerHTML = 'Degrees of Separation!'
-findLocationDiv.prepend(heading)
+// findLocationDiv.prepend(heading)
 
 let currentDiv = "login-page"
 let loggedIn = false
@@ -29,7 +45,7 @@ const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
-
+const countInDiv = document.querySelector('.count-in-timer')
 
 // =============================================================================
 
@@ -62,19 +78,27 @@ function visibilityFunction() {
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
     currentDiv = 'orientate'
-    console.log(state.coords, 'hello')
+    console.log(state.coords)
     break;
 
     case "orientate":
     orientateDiv.id = 'is_hidden'
+    countInDiv.id = 'is_visible'
+    gameplayDiv.id = 'is_hidden'
+    currentDiv = 'count-in'
+    countInTimer()
+    break;
+
+    case "count-in":
+    countInDiv.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
-
     break;
 
     case "gameplay":
     gameplayDiv.id = 'is_hidden'
     scoreboardDiv.id = 'is_visible'
+    countInDiv.id = 'is_hidden'
     currentDiv = 'scoreboard'
     break;
 
@@ -106,13 +130,14 @@ signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
 
-    state.current_user = event.target.name.value
+    state.currentUser = event.target.name.value
     loggedIn = !loggedIn
 
     if (loggedIn) { signUpDiv.style.display = 'none' }
 
     showWelcome()
     addPointerToPage()
+    bearingEventListener()
 
 })
 }
@@ -130,7 +155,7 @@ const showWelcome = () => {
 
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
 
-    welcomeEl.innerText = `Welcome ${state.current_user}`
+    welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
 // =============================================================================
@@ -140,11 +165,43 @@ const currentRoundEl = document.querySelector('#round')
 const currentScoreEl = document.querySelector('#score')
 
 
+// function to countown into each round
+const countInTimer = () => {
+  if(state.round < 5){
+    countInDiv.innerHTML = ''
+    let counter = 3;
+    let gameCountIn = setInterval(function(){
+      if (counter === 0) {
+        countInDiv.innerHTML = `
+        <h1>GO!</h1>
+        `
+        --counter
+      } else if (counter === -1){
+        currentDiv = "count-in"
+        visibilityFunction()
+        clearInterval(gameCountIn);
+      } else{
+        countInDiv.innerHTML = `
+        <h1>${counter}</h1>
+        `
+        --counter
+      }
+
+    }, 1000);
+  } else{
+    currentDiv = "gameplay"
+    visibilityFunction()
+  }
+}
+
+
+
 
 // get a random number between 0 and 4 to select city from
 const randValue = () => {
   return Math.floor(Math.random() * 5);
 }
+
 
 const gameplayBtn = document.querySelector("#gameplay-btn")
 gameplayBtn.addEventListener("click", ()=>{
@@ -156,8 +213,12 @@ gameplayBtn.addEventListener("click", ()=>{
   currentRoundEl.innerText = `Round: ${state.round}`
   currentScoreEl.innerText = `Score: ${state.score}`
   targetNameEl.innerText = `Find: ${state.target.name}`
+  currentDiv = "orientate"
+  visibilityFunction()
+
   let index = randValue()
   setTarget(index, state)
+
 } else{
 visibilityFunction()
 }
@@ -170,13 +231,13 @@ visibilityFunction()
 const addPointerToPage = () => {
     const point = document.createElement('img')
     point.className = 'compass-point'
-    const gameSection = document.querySelector('.game-section')
+    const pointerSection = document.querySelector('.pointer-section')
 
     point.src = 'image/compass.svg'
     point.height = 150;
     point.width = 150;
 
-    gameSection.appendChild(point)
+    pointerSection.appendChild(point)
 
     // navigator.geolocation.watchPosition((data) => {
     // // point.style.transform = `rotate(${data.coords.heading}deg)`
@@ -198,6 +259,33 @@ const addPointerToPage = () => {
     }
 }
 
+
+// callback function for bearing event listener
+    const  deviceOrientationListener = (event) =>  {
+      let alpha = event.alpha;
+      state.userHeading = 360 - alpha;
+    }
+
+
+//function to add and remove window event listener and log bearing
+
+const bearingEventListener = () => {
+window.addEventListener("deviceorientation", deviceOrientationListener)
+
+
+  buttonEl = document.createElement('button')
+  gameplayDiv.append(buttonEl)
+  buttonEl.innerText = 'SET BEARING'
+
+
+  buttonEl.addEventListener('click', () => {
+    window.removeEventListener("deviceorientation", deviceOrientationListener);
+    
+    let bearingTestEl = document.createElement('h1')
+    bearingTestEl.innerText = `HEADING IS ${Math.round(state.userHeading)}`
+    document.body.prepend(bearingTestEl)
+})
+}
 
 
 const init = () => {
