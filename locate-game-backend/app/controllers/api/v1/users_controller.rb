@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
         @users = User.all
         render json: @users
       end
-    
+
       def create
         @user = User.new(name: params[:name], username: params[:username])
         if @user.valid?
@@ -13,17 +13,20 @@ class Api::V1::UsersController < ApplicationController
         else
           render json: { error: "Unable to create User." }, status: 400
         end
+
       end
 
-     
-     
+
+
       def show
          @user = User.find_by(username: params[:username])
 
           if @user
             render json: @user
-          else 
+          else
             render json: {error: "User not found"}, status: 404
 
       end
-end 
+    end 
+
+end
