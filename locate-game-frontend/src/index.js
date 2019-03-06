@@ -296,34 +296,40 @@ const countInTimer = () => {
 // =============================================================================
 
 const addPointerToPage = () => {
-    const point = document.createElement('img')
-    point.className = 'compass-point'
-    const pointerSection = document.querySelector('.pointer-section')
+    // const point = document.createElement('img')
+    // point.className = 'compass-point'
+    // const pointerSection = document.querySelector('.pointer-section')
 
-    point.src = 'image/compass.svg'
-    point.height = 150;
-    point.width = 150;
+     const compass = document.querySelector('.compass')
 
-    pointerSection.appendChild(point)
+
+    // point.src = 'image/arrowCompass.svg'
+    // point.height = 150;
+    // point.width = 150;
+
+    // pointerSection.appendChild(point)
 
     // navigator.geolocation.watchPosition((data) => {
     // // point.style.transform = `rotate(${data.coords.heading}deg)`
     // console.log(data)
     // })
 
+
+    window.addEventListener('deviceorientation', function (event) {
+          let alpha = event.alpha
+          let beta = event.beta
+          let gamma = event.gamma
+          compass.style.transform = `rotate(${alpha}deg)`
+      });
+
     // this should fire when signed in or new game clicked
 
-    if (window.DeviceorientationEvent) {
-        console.log('Device orientation is supported ')
-        window.addEventListener('deviceorientation', function (event) {
-            let alpha = event.alpha
-            let beta = event.beta
-            let gamma = event.gamma
-            point.style.transform = `rotate(${alpha}deg)`
-        });
-    } else {
-        console.log('device orientation is NOT supported')
-    }
+    // if (window.DeviceorientationEvent) {
+    //     console.log('Device orientation is supported ')
+    //
+    // } else {
+    //     console.log('device orientation is NOT supported')
+    // }
 }
 
 

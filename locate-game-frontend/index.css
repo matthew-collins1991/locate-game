@@ -26,6 +26,7 @@ html, body {
     min-height: 100%;
     background-color: grey;
     padding: 0px;
+    display: flex;
 }
 
 .login-page{
@@ -42,6 +43,7 @@ padding: 25px;
 
 .gameplay{
 padding: 25px;
+display: flex;
 }
 
 .scoreboard{
@@ -56,5 +58,21 @@ padding: 25px;
 
 margin: auto;
  vertical-align: middle;
+
+}
+
+.pointer-section{
+
+  display: flex;
+}
+
+.count-in-timer{
+
+  margin: auto;  
+}
+
+.compass{
+
+margin: auto;
 
 }
