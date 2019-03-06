@@ -32,6 +32,8 @@ let state = {
 }
 
 
+
+
 // =============================================================================
 
 const loginDiv = document.querySelector('.login-page')
@@ -134,9 +136,11 @@ const getTargetBearingFirstRound = () => {
 
 }
 
-const addEventListerToSignUpForm = () => {
 
 document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
+
+
+const addEventListerToSignUpForm = () => {
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
@@ -151,6 +155,7 @@ signUpFormEl.addEventListener('submit', (event) => {
     bearingEventListener()
 
 })
+}
 
 
 const addLocationToPage = (location) => {
@@ -182,24 +187,16 @@ const randValue = () => {
 }
 
 
-function nextRound() {
-  
-  getTargetBearing()
-  let roundScore = 0
-
-  
-  
-const gameplayBtn = document.querySelector("#gameplay-btn")
-
-gameplayBtn.addEventListener("click", () => nextRound())
-
+gameplayBtnEl.addEventListener("click", () => nextRound())
 
 const nextRound = () => {
   if (state.round <= 5){
-    
+
     bearingEventListener()
 
-    
+    getTargetBearing()
+    let roundScore = 0
+
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
@@ -217,23 +214,17 @@ const nextRound = () => {
   targetNameEl.innerText = `Find: ${state.target.name}`
   currentDiv = "orientate"
   visibilityFunction()
-  
+
   let index = randValue()
   setTarget(index, state)
-  
+
 
   finalScoreEl.innerText = `Your score: ${state.score}`
-  
-
-} else{
-visibilityFunction()
 
 
-
-}
-
-// =============================================================================
-
+  } else{
+    visibilityFunction()
+  }
 }
 
 
@@ -364,7 +355,7 @@ const addPointerToPage = () => {
 
 //function to add and remove window event listener and log bearing
 
-// callback function to make sure the score is always positive 
+// callback function to make sure the score is always positive
 const makeScorePositive = (i) => {
   return Math.sqrt(Math.pow(i, 2))
 }
@@ -373,9 +364,9 @@ const bearingEventListener = () => {
   window.addEventListener("deviceorientation", deviceOrientationListener)
 
 
-  gameplayBtnEl.addEventListener('click', () => {
-    // window.removeEventListener("deviceorientation", deviceOrientationListener);
-})
+//   gameplayBtnEl.addEventListener('click', () => {
+//     // window.removeEventListener("deviceorientation", deviceOrientationListener);
+// })
 }
 
 
