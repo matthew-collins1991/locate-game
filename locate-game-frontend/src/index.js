@@ -50,7 +50,7 @@ const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
 const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
-
+const restartBtnEl = document.querySelector('#restart-btn')
 
 
 // =============================================================================
@@ -71,11 +71,6 @@ const setTarget = (randomNum, state) =>{
 function visibilityFunction() {
 
   switch (currentDiv) {
-    case "login-page":
-      loginDiv.id = 'is_hidden'
-      orientateDiv.id = 'is_visible'
-      currentDiv = 'orientate'
-    break;
 
     case "sign-up":
     signUpDiv.id = 'is_hidden'
@@ -171,7 +166,6 @@ const showWelcome = () => {
     visibilityFunction()
 
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
-
     welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
@@ -190,21 +184,21 @@ const randValue = () => {
 
 gameplayBtnEl.addEventListener("click", () => nextRound())
 
+
 const nextRound = () => {
-  if (state.round <= 5){
+
+  if (state.round < 5){
 
     bearingEventListener()
-
     getTargetBearing()
     let roundScore = 0
-
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
     // gameStartTimer.id = 'is_visible'
 
 
-    ++state.round
+    state.round++
 
     roundScore = makeScorePositive(state.targetBearing - state.userBearing)
 
@@ -219,18 +213,22 @@ const nextRound = () => {
   let index = randValue()
   setTarget(index, state)
 
-
   finalScoreEl.innerText = `Your score: ${state.score}`
 
-
   } else{
+
+    state.round = 1
+    currentDiv = "gameplay"
     visibilityFunction()
+    currentRoundEl.innerText = `Round: 1`
+    currentScoreEl.innerText = `Score: 0`
   }
 }
 
 
 
 //==============================================================================
+
 // TIMERS
 function timer(seconds){
 // clear any existing timers
@@ -243,7 +241,6 @@ function timer(seconds){
     const secondsLeft = Math.round((then - Date.now())/ 1000)
 
 // check if it should stop
-
     if(secondsLeft <= 0) {
       clearInterval(timerCount)
     }
@@ -251,7 +248,6 @@ function timer(seconds){
     // timerDisplay.id = 'is_visible'
     displayTimeLeft(secondsLeft)
   },1000)
-
 }
 
 
@@ -267,13 +263,10 @@ function displayTimeLeft(seconds){
    }else {
      timerDisplay.textContent = display
    }
-
-
 }
 
 
 // function count into each round
-
 const countInTimer = () => {
   if(state.round <= 5){
     countInDiv.innerHTML = ''
@@ -283,7 +276,6 @@ const countInTimer = () => {
         countInDiv.innerHTML = `
         <h1>GO!</h1>
         `
-
         --counter
       } else if (counter === -1){
         currentDiv = "count-in"
@@ -370,7 +362,25 @@ const bearingEventListener = () => {
 // })
 }
 
+// ==============================================================================
 
+// SCOREBOARD FUNCTIONS
+
+restartBtnEl.addEventListener('click', () => {
+  state.round = 1
+  state.score = 0
+  let randomNum = randValue()
+  setTarget(randomNum, state)
+  console.log("hello 3", state.round)
+  currentDiv = 'orientate'
+  visibilityFunction()
+})
+
+
+
+// =============================================================================
+
+// on page load
 
 const init = () => {
     addEventListerToSignUpForm()
