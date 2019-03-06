@@ -48,11 +48,7 @@ const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
 const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
-<<<<<<< HEAD
-=======
 
-
->>>>>>> c88c18e8773355a6911caf620513e0d1793c5842
 
 // =============================================================================
 
