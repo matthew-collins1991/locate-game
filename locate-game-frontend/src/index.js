@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // init()
+  init()
 })
-
 
 
 if (window.location.href.includes('ngrok'))
 
-{ BASEURL = 'https://1dec02ea.ngrok.io/api/v1'
+{
+  BASEURL = 'https://a85bb94b.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -368,12 +368,27 @@ const addPointerToPage = () => {
     // }
 }
 
+let testHeadingEl = document.createElement('h1')
+
 
 // callback function for bearing event listener
-    const  deviceOrientationListener = (event) =>  {
-      let alpha = event.alpha;
-      state.userBearing = Math.floor(360 - alpha);
-    }
+const deviceOrientationListener = (event) => {
+  var alpha = event.alpha;
+
+  if (typeof event.webkitCompassHeading !== "undefined") {
+    alpha = event.webkitCompassHeading;
+    state.userBearing = alpha
+  }
+  else {
+    state.userBearing = 360 - alpha;
+  }
+
+  testHeadingEl.innerHTML = `Heading: ${Math.floor(state.userBearing)}`
+
+  document.body.prepend(testHeadingEl)
+  document.body.prepend(testTargetEl)
+  state.userBearing = Math.floor(360 - alpha);
+}
 
 
 //function to add and remove window event listener and log bearing
@@ -384,12 +399,19 @@ const makeScorePositive = (i) => {
 }
 
 const bearingEventListener = () => {
-  window.addEventListener("deviceorientation", deviceOrientationListener)
+  if (window.DeviceOrientationAbsoluteEvent) {
+    window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
+  }
+  else if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", deviceOrientationListener);
+  }
+  else {
+    alert("Sorry, try again on a compatible mobile device!");
+  }
 
 
-//   gameplayBtnEl.addEventListener('click', () => {
-//     // window.removeEventListener("deviceorientation", deviceOrientationListener);
-// })
+
+
 }
 
 
@@ -400,4 +422,3 @@ const init = () => {
     getTargetBearingFirstRound()
 }
 
-init()
