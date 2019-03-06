@@ -39,6 +39,7 @@ const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const countInDiv = document.querySelector('.count-in-timer')
+const readyBtnEL = document.querySelector('#ready-btn')
 
 // =============================================================================
 
@@ -116,6 +117,14 @@ document.addEventListener('click', event =>{
   }
 })
 
+
+const getTargetBearingFirstRound = () => {
+
+  readyBtnEL.addEventListener('click', () => {
+    getTargetBearing()
+  })
+
+}
 
 const addEventListerToSignUpForm = () => {
 
@@ -208,9 +217,12 @@ gameplayBtn.addEventListener("click", ()=>{
   targetNameEl.innerText = `Find: ${state.target.name}`
   currentDiv = "orientate"
   visibilityFunction()
+  getTargetBearing()
 
   let index = randValue()
   setTarget(index, state)
+  
+  
 
 } else{
 visibilityFunction()
@@ -256,7 +268,7 @@ const addPointerToPage = () => {
 // callback function for bearing event listener
     const  deviceOrientationListener = (event) =>  {
       let alpha = event.alpha;
-      state.userHeading = 360 - alpha;
+      state.userBearing = Math.floor(360 - alpha);
     }
 
 
@@ -275,13 +287,13 @@ window.addEventListener("deviceorientation", deviceOrientationListener)
     window.removeEventListener("deviceorientation", deviceOrientationListener);
     
     let bearingTestEl = document.createElement('h1')
-    bearingTestEl.innerText = `HEADING IS ${Math.floor(state.userHeading)}`
+    bearingTestEl.innerText = `Score for this round is ${state.targetBearing - state.userBearing}`
     document.body.prepend(bearingTestEl)
 })
 }
 
-
 const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
+    getTargetBearingFirstRound()
 }
