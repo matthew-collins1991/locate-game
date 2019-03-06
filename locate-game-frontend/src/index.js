@@ -1,8 +1,12 @@
+document.addEventListener('DOMContentLoaded', () => {
+  init()
+})
 
 
-if (window.location.href.includes('ngrok')) 
 
-{ BASEURL = 'https://3b20b42e.ngrok.io/api/v1' 
+if (window.location.href.includes('ngrok'))
+
+{ BASEURL = 'https://1dec02ea.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -10,12 +14,14 @@ if (window.location.href.includes('ngrok'))
 
 const USERSURL =  BASEURL + '/users'
 const REGIONURL = BASEURL + '/regions'
+
+
 const findLocationDiv = document.querySelector('.find-location')
 
-const heading = document.createElement('h1')
-heading.innerHTML = 'Degrees of Separation!'
-// findLocationDiv.prepend(heading)
 
+let timerCount;
+let countDown;
+let timerSeconds = 11;
 let currentDiv = "login-page"
 let loggedIn = false
 let allRegions = []
@@ -39,18 +45,19 @@ const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const countInDiv = document.querySelector('.count-in-timer')
+const restartBtnEl = document.querySelector('#restart-btn')
+const timerDisplay = document.querySelector('.display_time_left')
+
 
 // =============================================================================
 
 // on page load
-document.addEventListener('DOMContentLoaded', () => {
-    init()
-})
 
-const setTarget = (index, state) =>{
+
+const setTarget = (randomNum, state) =>{
   let round_index = state.round-1
   let currentRegion = allRegions[0][round_index]
-  state.target = currentRegion.cities[index]
+  state.target = currentRegion.cities[randomNum]
   targetNameEl.innerText = `Find: ${state.target.name}`
 }
 
@@ -71,13 +78,13 @@ function visibilityFunction() {
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
     currentDiv = 'orientate'
-    console.log(state.coords)
     break;
 
     case "orientate":
     orientateDiv.id = 'is_hidden'
     countInDiv.id = 'is_visible'
     gameplayDiv.id = 'is_hidden'
+    scoreboardDiv.id = 'is_hidden'
     currentDiv = 'count-in'
     countInTimer()
     break;
@@ -86,6 +93,8 @@ function visibilityFunction() {
     countInDiv.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
+    //gameStartCountdown(3)
+
     break;
 
     case "gameplay":
@@ -93,6 +102,7 @@ function visibilityFunction() {
     scoreboardDiv.id = 'is_visible'
     countInDiv.id = 'is_hidden'
     currentDiv = 'scoreboard'
+
     break;
 
     case "scoreboard":
@@ -158,7 +168,82 @@ const currentRoundEl = document.querySelector('#round')
 const currentScoreEl = document.querySelector('#score')
 
 
-// function to countown into each round
+
+
+// get a random number between 0 and 4 to select city from
+const randValue = () => {
+  return Math.floor(Math.random() * 5);
+}
+
+
+const gameplayBtn = document.querySelector("#gameplay-btn")
+gameplayBtn.addEventListener("click", ()=>{
+
+  if (state.round < 5){
+    // ADD SCORING HERE
+
+    // gameStartCountdown(3)
+    // gameStartTimer.id = 'is_visible'
+
+    let roundScore = 35
+
+    ++state.round
+
+
+    state.score = state.score+roundScore
+  currentRoundEl.innerText = `Round: ${state.round}`
+  currentScoreEl.innerText = `Score: ${state.score}`
+  targetNameEl.innerText = `Find: ${state.target.name}`
+  currentDiv = "orientate"
+  visibilityFunction()
+
+  let index = randValue()
+  setTarget(index, state)
+
+} else{
+visibilityFunction()
+
+}
+})
+
+// =============================================================================
+
+//==============================================================================
+// TIMERS
+function timer(seconds){
+// clear any existing timers
+  clearInterval(timerCount)
+  const now = Date.now()
+  const then = now + seconds * 1000;
+  displayTimeLeft(seconds)
+
+  timerCount = setInterval(() => {
+    const secondsLeft = Math.round((then - Date.now())/ 1000)
+
+// check if it should stop
+
+    if(secondsLeft <= 0) {
+      clearInterval(timerCount)
+    }
+// display it
+    // timerDisplay.id = 'is_visible'
+    displayTimeLeft(secondsLeft)
+  },1000)
+
+}
+
+
+function displayTimeLeft(seconds){
+  const minutes = Math.floor(seconds/60)
+  const remainderSeconds = seconds % 60
+  const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
+  // if (display === '0')
+  timerDisplay.textContent = display
+}
+
+
+// function count into each round
+
 const countInTimer = () => {
   if(state.round < 5){
     countInDiv.innerHTML = ''
@@ -168,6 +253,7 @@ const countInTimer = () => {
         countInDiv.innerHTML = `
         <h1>GO!</h1>
         `
+        timer(timerSeconds)
         --counter
       } else if (counter === -1){
         currentDiv = "count-in"
@@ -186,37 +272,6 @@ const countInTimer = () => {
     visibilityFunction()
   }
 }
-
-
-
-
-// get a random number between 0 and 4 to select city from
-const randValue = () => {
-  return Math.floor(Math.random() * 5);
-}
-
-
-const gameplayBtn = document.querySelector("#gameplay-btn")
-gameplayBtn.addEventListener("click", ()=>{
-  if (state.round < 5){
-    // ADD SCORING HERE
-    let roundScore = 35
-    ++state.round
-    state.score = state.score+roundScore
-  currentRoundEl.innerText = `Round: ${state.round}`
-  currentScoreEl.innerText = `Score: ${state.score}`
-  targetNameEl.innerText = `Find: ${state.target.name}`
-  currentDiv = "orientate"
-  visibilityFunction()
-
-  let index = randValue()
-  setTarget(index, state)
-
-} else{
-visibilityFunction()
-}
-})
-
 
 
 // =============================================================================
@@ -273,7 +328,7 @@ window.addEventListener("deviceorientation", deviceOrientationListener)
 
   buttonEl.addEventListener('click', () => {
     window.removeEventListener("deviceorientation", deviceOrientationListener);
-    
+
     let bearingTestEl = document.createElement('h1')
     bearingTestEl.innerText = `HEADING IS ${Math.floor(state.userHeading)}`
     document.body.prepend(bearingTestEl)
@@ -285,3 +340,5 @@ const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
 }
+
+

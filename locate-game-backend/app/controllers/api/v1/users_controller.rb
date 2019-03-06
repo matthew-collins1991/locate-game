@@ -13,6 +13,7 @@ class Api::V1::UsersController < ApplicationController
         else
           render json: { error: "Unable to create User." }, status: 400
         end
+
       end
 
 
@@ -26,5 +27,4 @@ class Api::V1::UsersController < ApplicationController
 
       end
     end
-    
 end

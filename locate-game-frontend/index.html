@@ -18,7 +18,9 @@
 <body>
 
   <div class="full-page-container">
-
+    <div class="header-bar">
+      <h1>Degrees of Separation</h1>
+    </div>
 
 <!-- Div to show user log-in page -->
     <div class="login-page" id='is_visible'>
@@ -71,6 +73,8 @@
 
 <!-- Div to show gameplay -->
     <div class="gameplay" id='is_hidden'>
+      <h2 class='display_time_left' id="is_visible"></h2>
+
 
       <p id="round"> Round: 1</p>
       <p id="score"> Score: 0</p>
@@ -78,6 +82,7 @@
       <div class="pointer-section">
 
       </div>
+          <h2 class='game_start_countdown' id='is_visible'></h2>
       <br>
       <h1 id="target-name"></h1>
       <button id="gameplay-btn" type="button" name="select-location">CONFIRM</button>
@@ -119,7 +124,7 @@
     </tbody>
 </table>
 <br>
-<button id="restart" type="button" name="restart">New Game</button>
+<button id="restart-btn" type="button" name="restart">New Game</button>
 
     </div>
 
