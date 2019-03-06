@@ -25,6 +25,7 @@ class Api::V1::UsersController < ApplicationController
             render json: {error: "User not found"}, status: 404
 
       end
-    end
-    
-end
+
+  end 
+end 
+
