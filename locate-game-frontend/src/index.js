@@ -22,7 +22,7 @@ const findLocationDiv = document.querySelector('.find-location')
 let timerCount;
 let countDown;
 let timerSeconds = 11;
-let currentDiv = "login-page"
+let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
 let state = {
@@ -52,6 +52,11 @@ const timerDisplay = document.querySelector('.display_time_left')
 // =============================================================================
 
 // on page load
+const init = () => {
+    getRegions().then(storeRegions)
+}
+
+init()
 
 
 const setTarget = (randomNum, state) =>{
@@ -127,8 +132,8 @@ document.addEventListener('click', event =>{
 })
 
 
-const addEventListerToSignUpForm = () => {
 
+document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
     addUserToApi(event.target.name.value, event.target.username.value)
@@ -143,7 +148,7 @@ signUpFormEl.addEventListener('submit', (event) => {
     bearingEventListener()
 
 })
-}
+
 
 const addLocationToPage = (location) => {
    const p = document.createElement('p')
@@ -177,8 +182,8 @@ const randValue = () => {
 
 
 const gameplayBtn = document.querySelector("#gameplay-btn")
-gameplayBtn.addEventListener("click", ()=>{
 
+gameplayBtn.addEventListener("click", ()=>{
   if (state.round < 5){
     // ADD SCORING HERE
 
@@ -334,11 +339,3 @@ window.addEventListener("deviceorientation", deviceOrientationListener)
     document.body.prepend(bearingTestEl)
 })
 }
-
-
-const init = () => {
-    addEventListerToSignUpForm()
-    getRegions().then(storeRegions)
-}
-
-init()
