@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   init()
+
 })
 
 
@@ -57,6 +58,7 @@ const finalScoreEl = document.querySelector('#final-score')
 const title = document.querySelector('.header-bar')
 const logo = document.querySelector('.logo-cont')
 const restartBtnEl = document.querySelector('#restart-btn')
+const loadingDiv = document.querySelector('.loading')
 
 
 // =============================================================================
@@ -77,18 +79,19 @@ const setTarget = (randomNum, state) =>{
 function visibilityFunction() {
 
   switch (currentDiv) {
-    case "login-page":
-      loginDiv.id = 'is_hidden'
-      orientateDiv.id = 'is_visible'
-      currentDiv = 'orientate'
-    break;
 
     case "sign-up":
     signUpDiv.id = 'is_hidden'
-    orientateDiv.id = 'is_visible'
+    loadingDiv.id = 'is_visible'
     title.id = 'is_hidden'
     logo.id ='is_hidden'
-    currentDiv = 'orientate'
+    currentDiv = 'loading'
+    break;
+
+    case "loading":
+      loadingDiv.id = 'is_hidden'
+      orientateDiv.id = 'is_visible'
+      currentDiv = 'orientate'
     break;
 
     case "orientate":
@@ -181,6 +184,42 @@ const showWelcome = () => {
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
     welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
+
+// =============================LOADING PAGE====================================
+
+
+const loading = () => {
+
+  let counter = 3;
+  let phrase = "Loading"
+
+    loadingDiv.innerHTML = `<h3>${phrase}...</h3>`
+
+    let gameCountIn = setInterval(function(){
+      if (counter === 3) {
+        loadingDiv.innerHTML = `
+        <h3>${phrase}</h3>
+        `
+        --counter
+      } else if (counter === 2){
+        loadingDiv.innerHTML = `
+        <h3>${phrase}.</h3>
+        `
+        --counter
+      } else if (counter === 1){
+        loadingDiv.innerHTML = `
+        <h3>${phrase}..</h3>
+        `
+        --counter
+      } else{
+        clearInterval(gameCountIn);
+        loading()
+      }
+    }, 1000);
+  }
+
+
+
 
 // =============================================================================
 
@@ -416,3 +455,5 @@ const init = () => {
     getRegions().then(storeRegions)
      getTargetBearingFirstRound()
 }
+
+loading()
