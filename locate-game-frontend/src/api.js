@@ -37,10 +37,7 @@ const storeRegions = (regions) =>{
   const randValue = () => {
     return Math.floor(Math.random() * 5);
   }
-
    allRegions.push(regions)
-   let randomNum = randValue()
-//    setTarget(randomNum, state)
 }
 
 
@@ -51,8 +48,6 @@ const getUsers = () => fetch(USERSURL).then(resp => resp.json())
 
 const renderScores = users => {
   users.forEach(user => storeScore(user))
-  sortScore()
-  displayScoreboard()
 }
 
 const storeScore = user => {

@@ -22,7 +22,7 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 5;
+let timerSeconds = 1;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
@@ -344,7 +344,7 @@ function displayTimeLeft(seconds){
 const countInTimer = () => {
   if(state.round <= 5){
     countInDiv.innerHTML = ''
-    let counter = 3;
+    let counter = 1;
     let gameCountIn = setInterval(function(){
       if (counter === 0) {
         countInDiv.innerHTML = `
@@ -442,7 +442,7 @@ const removeBearingEventListener = () => {
   }
 }
 
-// ==============================================================================
+// ===============================SCOREBOARD FUNCTIONS===============================================
 
 // SCOREBOARD FUNCTIONS
 
@@ -459,7 +459,8 @@ restartBtnEl.addEventListener('click', () => {
 const sortScore = () => allScores.sort((a, b) => a[1] - b[1])
 
 const displayScoreboard = () =>{
-  for (var i = 0; i < 5; i++) {
+  scoreboardBodyEl.innerHTML = ''
+  for (var i = 0; i < 3; i++) {
     const tableRow = document.createElement('tr')
     tableRow.innerHTML = `
     <td>${allScores[i][0]}</td>
