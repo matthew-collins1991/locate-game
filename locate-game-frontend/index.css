@@ -17,7 +17,8 @@
 html, body {
             height: 100%;
             margin: 0;
-            background-color: #012839;
+            background-color: black;
+            /* background-color: #012839; */
             align-items: center;
             text-align: center;
             padding: 0px;
@@ -140,7 +141,8 @@ html, body {
 
 .header-bar{
 padding: 10px;
-background-color: #084864;
+background-color: #0c0c0c;
+/* background-color: #084864; */
 color: 	white;
 }
 
@@ -150,7 +152,27 @@ padding: 25px;
 
 .sign-up{
 padding: 25px;
+
 }
+
+input{
+  display: block;
+  padding: 10px;
+
+  margin: auto;
+  margin-top: 20px;
+
+}
+
+/* #signup_name{
+  margin: auto;
+
+}
+
+#signup_username{
+  margin: auto;
+
+} */
 
 .orientate{
 padding: 25px;
@@ -181,10 +203,35 @@ margin: auto;
   display: flex;
 }
 
+.counter-container{
+
+  width: 100vw;
+   height: 100vh;
+   display: flex;
+}
+
 .count-in-timer{
 
   margin: auto;
+  animation: pulse 4s ease-out infinite;
 }
+
+@keyframes pulse{
+     0% {
+       opacity: 0.4;
+       transform: scale(1);
+     }
+     50% {
+    opacity: 0;
+    transform: scale(2);
+    }
+     100% {
+        opacity: 0;
+     }
+
+}
+
+
 
 #svg_1 {
 
@@ -195,4 +242,16 @@ margin: auto;
 
 margin: auto;
 
+}
+
+.logo-cont {
+
+display: flex;
+
+}
+
+.logo{
+padding-top: 30px;
+margin:auto;
+width: 10em;
 }
