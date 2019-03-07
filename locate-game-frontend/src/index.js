@@ -366,7 +366,7 @@ const countInTimer = () => {
 
     }, 1000);
   } else{
-
+    clearInterval(gameCountIn)
     currentDiv = "gameplay"
     visibilityFunction()
   }
@@ -452,6 +452,8 @@ restartBtnEl.addEventListener('click', () => {
   let randomNum = randValue()
   setTarget(randomNum, state)
   console.log("hello 3", state.round)
+  currentDiv = 'loading'
+  visibilityFunction()
   currentDiv = 'orientate'
   visibilityFunction()
 })

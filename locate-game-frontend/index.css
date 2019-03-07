@@ -239,6 +239,7 @@ td, th {
     padding: 1.2rem 1.5rem;
     display: table-cell;
     vertical-align: inherit;
+    border-spacing: 0;
 }
 
 
