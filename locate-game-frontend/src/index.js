@@ -21,7 +21,7 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 500;
+let timerSeconds = 5;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
@@ -30,12 +30,6 @@ let state = {
   score: 0,
   target: []
 }
-
-
-
-
-
-
 
 
 // =============================================================================
@@ -249,7 +243,7 @@ gameplayBtnEl.addEventListener("click", () => nextRound())
 
 
 //==============================================================================
-// TIMERS
+// // TIMERS
 function timer(seconds){
 // clear any existing timers
   clearInterval(timerCount)
@@ -276,10 +270,11 @@ function timer(seconds){
 function displayTimeLeft(seconds){
   const minutes = Math.floor(seconds/60)
   const remainderSeconds = seconds % 60
-  const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
+  // const display = `${seconds}:${remainderMilli}`
+   const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (display === '00:00'){
      timerDisplay.textContent = display
-     console.log('DONE!!')
+    // console.log('DONE!!')
      // vibrate & end of round and change round 2
       nextRound()
    }else {
@@ -288,6 +283,7 @@ function displayTimeLeft(seconds){
 
 
 }
+
 
 
 // function count into each round
