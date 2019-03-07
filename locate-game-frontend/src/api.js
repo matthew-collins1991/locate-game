@@ -28,8 +28,6 @@ const addUserToApi = (name, username) => {
         })
 }
 
-
-
 const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
 
 const storeRegions = (regions) =>{
@@ -42,6 +40,19 @@ const storeRegions = (regions) =>{
    let randomNum = randValue()
 //    setTarget(randomNum, state)
 }
+
+
+const addGameToApi = (user_id, score ) =>
+    fetch(GAMESURL, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user_id, score})
+    }).then(resp => resp.json())
+
+
 
 
 

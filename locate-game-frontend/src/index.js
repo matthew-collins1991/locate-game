@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-
 if (window.location.href.includes('ngrok'))
 
 {
@@ -15,6 +14,7 @@ if (window.location.href.includes('ngrok'))
 
 const USERSURL =  BASEURL + '/users'
 const REGIONURL = BASEURL + '/regions'
+const GAMESURL = BASEURL + '/games'
 
 
 const findLocationDiv = document.querySelector('.find-location')
@@ -141,7 +141,6 @@ const getTargetBearingFirstRound = () => {
 
 }
 
-
 // ====================SIGN IN FORM=============================================
 
 document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
@@ -150,8 +149,11 @@ document.querySelector('#sign-up-link').addEventListener('click', () => document
 const addEventListerToSignUpForm = () => {
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
-    addUserToApi(event.target.name.value, event.target.username.value)
 
+    addUserToApi(event.target.name.value, event.target.username.value)
+     .then(user => state.userId = user.id)
+
+    
     state.currentUser = event.target.name.value
     loggedIn = !loggedIn
 
@@ -231,6 +233,11 @@ const randValue = () => {
 }
 
 
+const calculateDegreeDifference =  (bearing, heading) =>  {
+  return Math.abs(((((bearing - heading) % 360) + 540) % 360) - 180)
+}
+
+
 
   gameplayBtn.addEventListener("click", () => {
 
@@ -244,7 +251,7 @@ console.log(state.targetBearing)
 
   const nextRound = () => {
 
-    let roundScore = Math.floor(makeScorePositive(state.targetBearing - state.userBearing))
+    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
     console.log(`this round: ${roundScore}`)
     
     state.score = state.score+roundScore
@@ -277,6 +284,7 @@ console.log(state.targetBearing)
     currentRoundEl.innerText = `Round: 1`
     currentScoreEl.innerText = `Score: 0`
     finalScoreEl.innerText = `Your score: ${state.score}`
+    addGameToApi(state.userId, state.score)
   }
 }
 
@@ -314,14 +322,10 @@ function displayTimeLeft(seconds){
    const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (display === '00:00'){
      timerDisplay.textContent = display
-<<<<<<< HEAD
      console.log('DONE!!')
     
  
 
-=======
-    // console.log('DONE!!')
->>>>>>> game-logic
      // vibrate & end of round and change round 2
       nextRound()
         console.log(state.target)
@@ -398,11 +402,15 @@ const deviceOrientationListener = (event) => {
     state.userBearing = 360 - alpha;
   }
 
-  testHeadingEl.innerHTML = `Heading: ${Math.floor(state.userBearing)}`
+  testHeadingEl.innerHTML = `TEST HEADING ${Math.floor(state.userBearing)}`
+
+  headingEl = document.querySelector('#orient-heading')
+
+  state.userBearing < 1 ? headingEl.innerHTML = `N` : headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg`
 
   document.body.prepend(testHeadingEl)
   document.body.prepend(testTargetEl)
-  state.userBearing = Math.floor(360 - alpha);
+  // state.userBearing = Math.floor(360 - alpha);
 }
 
 
@@ -424,7 +432,6 @@ const addBearingEventListener = () => {
     alert("Sorry, try again on a compatible mobile device!");
   }
 }
-
 
 
 const removeBearingEventListener = () => {
