@@ -17,10 +17,15 @@
 <body>
 
   <div class="full-page-container">
-    <div class="header-bar">
+    <div class="header-bar" id="is_visible">
       <h1>Degrees of Separation</h1>
     </div>
 
+<!-- LOGO -->
+
+    <div class='logo-cont' id='is_visible'>
+        <img src="image/logo.svg" alt="compass logo" class='logo'>
+    </div>
 
 <!-- Div to show when user is filling out sign-in form -->
     <div class="sign-up" id='is_visible'>
@@ -49,7 +54,7 @@
         <br>
             <span><p id="current-location"></p></span>
         <br>
-        <a onclick="visibilityFunction()" class="button" type="button" name="orientation">Ready</a>
+        <a onclick="visibilityFunction()" id = "ready-btn" class="button" type="button" name="orientation">Ready</a>
 
 
     </div>
@@ -59,10 +64,14 @@
 <!-- ===================================GAMEPLAY DIVS ========================================= -->
 
 <!-- Div to show count in timer -->
+<div class='counter-container' id ="is_hidden">
 
-<div class="count-in-timer" id ="is_hidden">
+  <div class="count-in-timer">
 
+  </div>
 </div>
+
+
 
 
 

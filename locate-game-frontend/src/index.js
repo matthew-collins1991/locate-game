@@ -35,7 +35,13 @@ let state = {
 
 
 
+<<<<<<< HEAD
 
+=======
+// float getDifference(float a1, float a2) {
+//     return Math.min((a1-a2)<0?a1-a2+360:a1-a2, (a2-a1)<0?a2-a1+360:a2-a1)
+// }
+>>>>>>> 0d0211de7bea27e124a463a1e8e926cd93947435
 
 // =============================================================================
 
@@ -48,12 +54,13 @@ const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
-const countInDiv = document.querySelector('.count-in-timer')
+const countInDiv = document.querySelector('.counter-container')
 const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
 const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
-
+const title = document.querySelector('.header-bar')
+const logo = document.querySelector('.logo-cont')
 
 
 // =============================================================================
@@ -83,6 +90,8 @@ function visibilityFunction() {
     case "sign-up":
     signUpDiv.id = 'is_hidden'
     orientateDiv.id = 'is_visible'
+    title.id = 'is_hidden'
+    logo.id ='is_hidden'
     currentDiv = 'orientate'
     break;
 
@@ -96,6 +105,7 @@ function visibilityFunction() {
     break;
 
     case "count-in":
+    // title.id = 'is_hidden'
     countInDiv.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
@@ -195,12 +205,19 @@ const randValue = () => {
 gameplayBtnEl.addEventListener("click", () => nextRound())
 
 
-const nextRound = () => {
-  if (state.round <= 5){
 
+  const gameplayBtn = document.querySelector("#gameplay-btn")
+
+  gameplayBtn.addEventListener("click", () => nextRound())
+
+
+  const nextRound = () => {
+    if (state.round <= 5){
+
+
+      getTargetBearing()
+      let roundScore = 0
     bearingEventListener()
-    getTargetBearing()
-    let roundScore = 0
 
     // ADD SCORING HERE
 
@@ -313,25 +330,10 @@ const countInTimer = () => {
 // =============================================================================
 
 const addPointerToPage = () => {
-    // const point = document.createElement('img')
-    // point.className = 'compass-point'
-    // const pointerSection = document.querySelector('.pointer-section')
+
 
      const compass = document.querySelector('.compass')
       const circle = document.querySelector('#svg_1')
-
-
-    // point.src = 'image/arrowCompass.svg'
-    // point.height = 150;
-    // point.width = 150;
-
-    // pointerSection.appendChild(point)
-
-    // navigator.geolocation.watchPosition((data) => {
-    // // point.style.transform = `rotate(${data.coords.heading}deg)`
-    // console.log(data)
-    // })
-
 
     window.addEventListener('deviceorientation', function (event) {
           let alpha = event.alpha
@@ -340,14 +342,6 @@ const addPointerToPage = () => {
           circle.style.transform = `rotate(${alpha}deg)`
       });
 
-    // this should fire when signed in or new game clicked
-
-    // if (window.DeviceorientationEvent) {
-    //     console.log('Device orientation is supported ')
-    //
-    // } else {
-    //     console.log('device orientation is NOT supported')
-    // }
 }
 
 let testHeadingEl = document.createElement('h1')
