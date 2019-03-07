@@ -70,7 +70,7 @@ const setTarget = (randomNum, state) =>{
   targetNameEl.innerText = `Find: ${state.target.name}`
 }
 
-// =============================================================================
+// ========================VISBILITY FUNCTIONS=================================
 
 
 // on-click functionality in HTML changes which DIV is visible to the user.
@@ -129,14 +129,7 @@ function visibilityFunction() {
   }
 
 
-
-document.addEventListener('click', event =>{
-  if(event.target.id === "go-to-sign-up"){
-    loginDiv.id = 'is_hidden'
-    signUpDiv.id = 'is_visible'
-    currentDiv = 'sign-up'
-  }
-})
+  // ===========================================================================
 
 
 const getTargetBearingFirstRound = () => {
@@ -146,6 +139,8 @@ const getTargetBearingFirstRound = () => {
 
 }
 
+
+// ====================SIGN IN FORM=============================================
 
 document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
 
@@ -174,13 +169,13 @@ const addLocationToPage = (location) => {
     findLocationDiv.append(p)
 }
 
+
+
 const showWelcome = () => {
     getLocation()
     currentDiv = "sign-up"
     visibilityFunction()
-
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
-
     welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
@@ -197,19 +192,11 @@ const randValue = () => {
 }
 
 
-
+const gameplayBtn = document.querySelector("#gameplay-btn")
 gameplayBtnEl.addEventListener("click", () => nextRound())
-
-
-
-  const gameplayBtn = document.querySelector("#gameplay-btn")
-
-  gameplayBtn.addEventListener("click", () => nextRound())
-
 
   const nextRound = () => {
     if (state.round <= 5){
-
 
       getTargetBearing()
       let roundScore = 0
@@ -219,7 +206,6 @@ gameplayBtnEl.addEventListener("click", () => nextRound())
 
     // gameStartCountdown(3)
     // gameStartTimer.id = 'is_visible'
-
 
     ++state.round
 
@@ -235,8 +221,6 @@ gameplayBtnEl.addEventListener("click", () => nextRound())
 
   let index = randValue()
   setTarget(index, state)
-
-
   finalScoreEl.innerText = `Your score: ${state.score}`
 
 
@@ -284,7 +268,7 @@ function displayTimeLeft(seconds){
      timerDisplay.textContent = display
      console.log('DONE!!')
      // vibrate & end of round and change round 2
-      nextRound()
+      // nextRound()
    }else {
      timerDisplay.textContent = display
    }
