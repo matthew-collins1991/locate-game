@@ -30,7 +30,15 @@
 <!-- Div to show when user is filling out sign-in form -->
     <div class="sign-up" id='is_visible'>
         <h3>Sign up!</h3>
-        <form id="signup_form">
+        <script type="text/javascript">
+<form id="signup_form">	//auto expand textarea
+function adjust_textarea(h) {
+h.style.height = "20px";
+h.style.height = (h.scrollHeight)+"px";
+}
+</script>
+<form id="signup_form" class = "signup_form">
+        <form id="signup_form" class="signup_form">
             <input id="signup_name" type="text" name="name" placeholder="Name" />
             <input id="signup_username" type="text" name="username" placeholder="Username" />
             <br>

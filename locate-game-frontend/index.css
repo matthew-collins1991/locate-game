@@ -45,8 +45,7 @@ html, body {
   border: 1px solid #00c7ec;
   border-radius: 5px;
   line-height: 3em;
-  padding-left: 5em;
-  padding-right: 5em;
+  width: 100%;
   box-shadow: 0 0 0 0 transparent;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
@@ -74,8 +73,8 @@ html, body {
 .button:before {
   content: '';
   display: block;
-  width: 0px;
-  height: 86%;
+  width: 70%;
+  height: 70%;
   position: absolute;
   top: 7%;
   left: 0%;
@@ -254,4 +253,82 @@ display: flex;
 padding-top: 30px;
 margin:auto;
 width: 10em;
+}
+
+/* ==========================FORM INPUTS=================================== */
+
+ .signup_form{
+	font-family: 'Open Sans Condensed', arial, sans;
+	width: 100%;
+	padding: 30px;
+	background: transparent;
+	margin: 50px auto;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+	-webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+  color: white;
+
+ }
+.signup_form h2{
+	background: white;
+	text-transform: uppercase;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: white;
+	font-size: 18px;
+	font-weight: 100;
+	padding: 20px;
+	margin: -30px -30px 30px -30px;
+}
+.signup_form input[type="text"],
+.signup_form input[type="date"],
+.signup_form input[type="datetime"],
+.signup_form input[type="email"],
+.signup_form input[type="number"],
+.signup_form input[type="search"],
+.signup_form input[type="time"],
+.signup_form input[type="url"],
+.signup_form input[type="password"],
+.signup_form textarea,
+.signup_form select
+{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	display: block;
+	width: 100%;
+	padding: 7px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background: transparent;
+	margin-bottom: 10px;
+	font: 16px Arial, Helvetica, sans-serif;
+	height: 45px;
+  color: white;
+}
+.signup_form textarea{
+	resize:none;
+	overflow: hidden;
+  color: white;
+}
+.signup_form input[type="button"],
+.signup_form input[type="submit"]{
+	-moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+	box-shadow: inset 0px 1px 0px 0px #45D6D6;
+	background-color: #2CBBBB;
+	border: 1px solid #27A0A0;
+	display: inline-block;
+	cursor: pointer;
+	color: #FFFFFF;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 14px;
+	padding: 8px 18px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.signup_form input[type="button"]:hover,
+.signup_form input[type="submit"]:hover {
+	background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+	background-color:#34CACA;
 }
