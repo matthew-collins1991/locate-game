@@ -224,7 +224,7 @@ visibilityFunction()
 
 // =============================================================================
 
-}
+//}
 
 
 
@@ -307,25 +307,10 @@ const countInTimer = () => {
 // =============================================================================
 
 const addPointerToPage = () => {
-    // const point = document.createElement('img')
-    // point.className = 'compass-point'
-    // const pointerSection = document.querySelector('.pointer-section')
+
 
      const compass = document.querySelector('.compass')
       const circle = document.querySelector('#svg_1')
-
-
-    // point.src = 'image/arrowCompass.svg'
-    // point.height = 150;
-    // point.width = 150;
-
-    // pointerSection.appendChild(point)
-
-    // navigator.geolocation.watchPosition((data) => {
-    // // point.style.transform = `rotate(${data.coords.heading}deg)`
-    // console.log(data)
-    // })
-
 
     window.addEventListener('deviceorientation', function (event) {
           let alpha = event.alpha
@@ -334,14 +319,6 @@ const addPointerToPage = () => {
           circle.style.transform = `rotate(${alpha}deg)`
       });
 
-    // this should fire when signed in or new game clicked
-
-    // if (window.DeviceorientationEvent) {
-    //     console.log('Device orientation is supported ')
-    //
-    // } else {
-    //     console.log('device orientation is NOT supported')
-    // }
 }
 
 
