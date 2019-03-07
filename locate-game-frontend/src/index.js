@@ -56,6 +56,7 @@ const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
 const title = document.querySelector('.header-bar')
 const logo = document.querySelector('.logo-cont')
+const restartBtnEl = document.querySelector('#restart-btn')
 
 
 // =============================================================================
@@ -240,7 +241,11 @@ gameplayBtnEl.addEventListener("click", () => nextRound())
 
 
   } else{
+    state.round = 1
+    currentDiv = "gameplay"
     visibilityFunction()
+    currentRoundEl.innerText = `Round: 1`
+    currentScoreEl.innerText = `Score: 0`
   }
 }
 
@@ -379,13 +384,23 @@ const bearingEventListener = () => {
   else {
     alert("Sorry, try again on a compatible mobile device!");
   }
-
-
-
-
 }
 
+// ==============================================================================
 
+// SCOREBOARD FUNCTIONS
+
+restartBtnEl.addEventListener('click', () => {
+  state.round = 1
+  state.score = 0
+  let randomNum = randValue()
+  setTarget(randomNum, state)
+  console.log("hello 3", state.round)
+  currentDiv = 'orientate'
+  visibilityFunction()
+})
+
+// =============================================================================
 
 const init = () => {
     addEventListerToSignUpForm()
