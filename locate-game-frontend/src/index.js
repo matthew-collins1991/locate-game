@@ -22,7 +22,7 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 1;
+let timerSeconds = 5;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
@@ -351,7 +351,7 @@ function displayTimeLeft(seconds){
 const countInTimer = () => {
   if(state.round <= 5){
     countInDiv.innerHTML = ''
-    let counter = 1;
+    let counter = 3;
     let gameCountIn = setInterval(function(){
       if (counter === 0) {
         countInDiv.innerHTML = `
