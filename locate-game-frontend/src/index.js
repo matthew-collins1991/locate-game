@@ -22,10 +22,11 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 5;
+let timerSeconds = 1;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
+let allScores = []
 let state = {
   round: 1,
   score: 0,
@@ -54,6 +55,7 @@ const title = document.querySelector('.header-bar')
 const logo = document.querySelector('.logo-cont')
 const restartBtnEl = document.querySelector('#restart-btn')
 const loadingDiv = document.querySelector('.loading')
+const scoreboardBodyEl = document.querySelector('.scoreboard-body')
 
 
 // =============================================================================
@@ -77,6 +79,7 @@ function visibilityFunction() {
 
     case "sign-up":
     signUpDiv.id = 'is_hidden'
+    loading()
     loadingDiv.id = 'is_visible'
     title.id = 'is_hidden'
     logo.id ='is_hidden'
@@ -253,15 +256,15 @@ console.log(state.targetBearing)
 
     let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
     console.log(`this round: ${roundScore}`)
-    
+
     state.score = state.score+roundScore
     console.log(`total score: ${state.score}`)
-    
+
     if (state.round < 5){
-      
+
       ++state.round
       let index = randValue()
-      
+
       setTarget(index, state)
       getTargetBearing()
       roundScore = 0
@@ -279,6 +282,9 @@ console.log(state.targetBearing)
 
   } else{
     state.round = 1
+    // push username and final score to allScores in format of [username, score]
+    sortScore()
+    displayScoreboard()
     currentDiv = "gameplay"
     visibilityFunction()
     currentRoundEl.innerText = `Round: 1`
@@ -322,9 +328,12 @@ function displayTimeLeft(seconds){
    const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (display === '00:00'){
      timerDisplay.textContent = display
-     console.log('DONE!!')
-    
- 
+
+
+
+
+
+    // console.log('DONE!!')
 
      // vibrate & end of round and change round 2
       nextRound()
@@ -342,7 +351,7 @@ function displayTimeLeft(seconds){
 const countInTimer = () => {
   if(state.round <= 5){
     countInDiv.innerHTML = ''
-    let counter = 3;
+    let counter = 1;
     let gameCountIn = setInterval(function(){
       if (counter === 0) {
         countInDiv.innerHTML = `
@@ -443,7 +452,7 @@ const removeBearingEventListener = () => {
   }
 }
 
-// ==============================================================================
+// ===============================SCOREBOARD FUNCTIONS===============================================
 
 // SCOREBOARD FUNCTIONS
 
@@ -457,12 +466,26 @@ restartBtnEl.addEventListener('click', () => {
   visibilityFunction()
 })
 
+const sortScore = () => allScores.sort((a, b) => a[1] - b[1])
+
+const displayScoreboard = () =>{
+  scoreboardBodyEl.innerHTML = ''
+  for (var i = 0; i < 3; i++) {
+    const tableRow = document.createElement('tr')
+    tableRow.innerHTML = `
+    <td>${allScores[i][0]}</td>
+    <td>${allScores[i][1]}</td>
+    `
+    scoreboardBodyEl.append(tableRow)
+  }
+}
+
+
 // =============================================================================
 
 const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
+    getUsers().then(renderScores)
      getTargetBearingFirstRound()
 }
-
-loading()

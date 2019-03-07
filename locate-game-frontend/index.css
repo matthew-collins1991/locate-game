@@ -184,7 +184,7 @@ width: 100vw;
 
 .inner_orientation{
 
-  
+
 
 }
 
@@ -195,8 +195,57 @@ width: 100vw;
  height: 100vh;
 }
 
+table {
+    border-spacing: 0;
+    width: 75%;
+    max-width: 400px;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+    margin: auto;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+    text-align: center;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+
+}
+
+
+td:first-child, th:first-child {
+    padding-left: 0;
+}
+
+th{
+  text-align: center;
+  font-size: xx-large;
+}
+
+td{
+  text-align: left;
+}
+
+td, th {
+    border-bottom: 0.1rem solid #e1e1e1;
+    padding: 1.2rem 1.5rem;
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+
 .scoreboard{
-padding: 25px;
+  display: block;
+  padding: 25px;
+  align-items: center;
 }
 
 .dropdown-menu{
