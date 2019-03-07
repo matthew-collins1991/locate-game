@@ -40,7 +40,7 @@ const storeRegions = (regions) =>{
 
    allRegions.push(regions)
    let randomNum = randValue()
-   setTarget(randomNum, state)
+//    setTarget(randomNum, state)
 }
 
 

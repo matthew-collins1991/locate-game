@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if (window.location.href.includes('ngrok'))
 
 {
-  BASEURL = 'https://a85bb94b.ngrok.io/api/v1'
+  BASEURL = 'https://c42d24db.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -140,7 +140,10 @@ document.addEventListener('click', event =>{
 
 const getTargetBearingFirstRound = () => {
   readyBtnEL.addEventListener('click', () => {
+    setTarget(randValue(), state)
     getTargetBearing()
+    console.log(state.targetBearing)
+    console.log(state.target)
   })
 
 }
@@ -188,6 +191,7 @@ const showWelcome = () => {
 // Gameplay Round functionality
 const currentRoundEl = document.querySelector('#round')
 const currentScoreEl = document.querySelector('#score')
+const gameplayBtn = document.querySelector("#gameplay-btn")
 
 
 // get a random number between 0 and 4 to select city from
@@ -196,51 +200,55 @@ const randValue = () => {
 }
 
 
-gameplayBtnEl.addEventListener("click", () => nextRound())
 
+  gameplayBtn.addEventListener("click", () => {
 
-
-  const gameplayBtn = document.querySelector("#gameplay-btn")
-
-  gameplayBtn.addEventListener("click", () => nextRound())
-
+    // console.log(state.target)
+    // console.log(state.targetBearing)
+    // nextRound()
+console.log(state.target)
+console.log(state.targetBearing)
+  })
 
   const nextRound = () => {
-    if (state.round <= 5){
 
-
+    let roundScore = makeScorePositive(state.targetBearing - state.userBearing)
+    console.log(`this round: ${roundScore}`)
+    
+    state.score = state.score+roundScore
+    console.log(`total score: ${state.score}`)
+    
+    if (state.round < 5){
+      
+      ++state.round
+      let index = randValue()
+      
+      setTarget(index, state)
       getTargetBearing()
-      let roundScore = 0
-    bearingEventListener()
+      roundScore = 0
 
 
-    // ADD SCORING HERE
 
-    // gameStartCountdown(3)
-    // gameStartTimer.id = 'is_visible'
+      bearingEventListener()
 
 
-    ++state.round
-
-    roundScore = makeScorePositive(state.targetBearing - state.userBearing)
 
 
-  state.score = state.score+roundScore
+
   currentRoundEl.innerText = `Round: ${state.round}`
   currentScoreEl.innerText = `Score: ${state.score}`
   targetNameEl.innerText = `Find: ${state.target.name}`
   currentDiv = "orientate"
   visibilityFunction()
 
-  let index = randValue()
-  setTarget(index, state)
+ 
 
 
+  
+  
+} else{
+  visibilityFunction()
   finalScoreEl.innerText = `Your score: ${state.score}`
-
-
-  } else{
-    visibilityFunction()
   }
 }
 
@@ -278,15 +286,18 @@ function displayTimeLeft(seconds){
    if (display === '00:00'){
      timerDisplay.textContent = display
      console.log('DONE!!')
+    
+ 
+
      // vibrate & end of round and change round 2
       nextRound()
+        console.log(state.target)
+        console.log(state.targetBearing)
+
    }else {
      timerDisplay.textContent = display
    }
-
-
-}
-
+};
 
 // function count into each round
 
@@ -325,7 +336,6 @@ const countInTimer = () => {
 // =============================================================================
 
 const addPointerToPage = () => {
-
 
      const compass = document.querySelector('.compass')
       const circle = document.querySelector('#svg_1')
@@ -380,9 +390,6 @@ const bearingEventListener = () => {
     alert("Sorry, try again on a compatible mobile device!");
   }
 
-
-
-
 }
 
 
@@ -390,5 +397,5 @@ const bearingEventListener = () => {
 const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
-    getTargetBearingFirstRound()
+     getTargetBearingFirstRound()
 }
