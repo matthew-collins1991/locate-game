@@ -156,8 +156,9 @@ signUpFormEl.addEventListener('submit', (event) => {
     addUserToApi(event.target.name.value, event.target.username.value)
      .then(user => state.userId = user.id)
 
-    
+
     state.currentUser = event.target.name.value
+    state.currentUsername = event.target.username.value
     loggedIn = !loggedIn
 
     if (loggedIn) { signUpDiv.style.display = 'none' }
@@ -282,7 +283,7 @@ console.log(state.targetBearing)
 
   } else{
     state.round = 1
-    // push username and final score to allScores in format of [username, score]
+    addScoreToLocalScores()
     sortScore()
     displayScoreboard()
     currentDiv = "gameplay"
@@ -293,6 +294,13 @@ console.log(state.targetBearing)
     addGameToApi(state.userId, state.score)
   }
 }
+
+
+const addScoreToLocalScores = () => {
+  const newScore = [state.currentUsername, state.score]
+  allScores.push(newScore)
+}
+
 
 
 
@@ -461,9 +469,6 @@ restartBtnEl.addEventListener('click', () => {
   state.score = 0
   let randomNum = randValue()
   setTarget(randomNum, state)
-  console.log("hello 3", state.round)
-  currentDiv = 'loading'
-  visibilityFunction()
   currentDiv = 'orientate'
   visibilityFunction()
 })
