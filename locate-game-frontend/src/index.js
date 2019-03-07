@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   init()
+
 })
 
 
 if (window.location.href.includes('ngrok'))
 
 {
-  BASEURL = 'https://fe7e1e83.ngrok.io/api/v1'
+  BASEURL = 'https://9aa5d621.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -57,6 +58,7 @@ const finalScoreEl = document.querySelector('#final-score')
 const title = document.querySelector('.header-bar')
 const logo = document.querySelector('.logo-cont')
 const restartBtnEl = document.querySelector('#restart-btn')
+const loadingDiv = document.querySelector('.loading')
 
 
 // =============================================================================
@@ -77,18 +79,19 @@ const setTarget = (randomNum, state) =>{
 function visibilityFunction() {
 
   switch (currentDiv) {
-    case "login-page":
-      loginDiv.id = 'is_hidden'
-      orientateDiv.id = 'is_visible'
-      currentDiv = 'orientate'
-    break;
 
     case "sign-up":
     signUpDiv.id = 'is_hidden'
-    orientateDiv.id = 'is_visible'
+    loadingDiv.id = 'is_visible'
     title.id = 'is_hidden'
     logo.id ='is_hidden'
-    currentDiv = 'orientate'
+    currentDiv = 'loading'
+    break;
+
+    case "loading":
+      loadingDiv.id = 'is_hidden'
+      orientateDiv.id = 'is_visible'
+      currentDiv = 'orientate'
     break;
 
     case "orientate":
@@ -179,6 +182,42 @@ const showWelcome = () => {
     welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
+// =============================LOADING PAGE====================================
+
+
+const loading = () => {
+
+  let counter = 3;
+  let phrase = "Loading"
+
+    loadingDiv.innerHTML = `<h3>${phrase}...</h3>`
+
+    let gameCountIn = setInterval(function(){
+      if (counter === 3) {
+        loadingDiv.innerHTML = `
+        <h3>${phrase}</h3>
+        `
+        --counter
+      } else if (counter === 2){
+        loadingDiv.innerHTML = `
+        <h3>${phrase}.</h3>
+        `
+        --counter
+      } else if (counter === 1){
+        loadingDiv.innerHTML = `
+        <h3>${phrase}..</h3>
+        `
+        --counter
+      } else{
+        clearInterval(gameCountIn);
+        loading()
+      }
+    }, 1000);
+  }
+
+
+
+
 // =============================================================================
 
 // Gameplay Round functionality
@@ -197,7 +236,6 @@ gameplayBtnEl.addEventListener("click", () => nextRound())
 
   const nextRound = () => {
     if (state.round <= 5){
-
       getTargetBearing()
       let roundScore = 0
     bearingEventListener()
@@ -268,7 +306,7 @@ function displayTimeLeft(seconds){
      timerDisplay.textContent = display
      console.log('DONE!!')
      // vibrate & end of round and change round 2
-      // nextRound()
+      nextRound()
    }else {
      timerDisplay.textContent = display
    }
@@ -391,3 +429,5 @@ const init = () => {
     getRegions().then(storeRegions)
     getTargetBearingFirstRound()
 }
+
+loading()
