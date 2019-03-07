@@ -35,9 +35,8 @@ let state = {
 
 
 
-// float getDifference(float a1, float a2) {
-//     return Math.min((a1-a2)<0?a1-a2+360:a1-a2, (a2-a1)<0?a2-a1+360:a2-a1)
-// }
+
+
 
 // =============================================================================
 
@@ -57,6 +56,8 @@ const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
 const title = document.querySelector('.header-bar')
 const logo = document.querySelector('.logo-cont')
+const restartBtnEl = document.querySelector('#restart-btn')
+
 
 // =============================================================================
 
@@ -69,7 +70,7 @@ const setTarget = (randomNum, state) =>{
   targetNameEl.innerText = `Find: ${state.target.name}`
 }
 
-// =============================================================================
+// ========================VISBILITY FUNCTIONS=================================
 
 
 // on-click functionality in HTML changes which DIV is visible to the user.
@@ -128,14 +129,7 @@ function visibilityFunction() {
   }
 
 
-
-document.addEventListener('click', event =>{
-  if(event.target.id === "go-to-sign-up"){
-    loginDiv.id = 'is_hidden'
-    signUpDiv.id = 'is_visible'
-    currentDiv = 'sign-up'
-  }
-})
+  // ===========================================================================
 
 
 const getTargetBearingFirstRound = () => {
@@ -148,6 +142,8 @@ const getTargetBearingFirstRound = () => {
 
 }
 
+
+// ====================SIGN IN FORM=============================================
 
 document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
 
@@ -164,7 +160,7 @@ signUpFormEl.addEventListener('submit', (event) => {
 
     showWelcome()
     addPointerToPage()
-    bearingEventListener()
+    addBearingEventListener()
 
 })
 }
@@ -176,13 +172,13 @@ const addLocationToPage = (location) => {
     findLocationDiv.append(p)
 }
 
+
+
 const showWelcome = () => {
     getLocation()
     currentDiv = "sign-up"
     visibilityFunction()
-
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
-
     welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
@@ -206,13 +202,14 @@ const randValue = () => {
     // console.log(state.target)
     // console.log(state.targetBearing)
     // nextRound()
+    removeBearingEventListener()
 console.log(state.target)
 console.log(state.targetBearing)
   })
 
   const nextRound = () => {
 
-    let roundScore = makeScorePositive(state.targetBearing - state.userBearing)
+    let roundScore = Math.floor(makeScorePositive(state.targetBearing - state.userBearing))
     console.log(`this round: ${roundScore}`)
     
     state.score = state.score+roundScore
@@ -228,11 +225,7 @@ console.log(state.targetBearing)
       roundScore = 0
 
 
-
-      bearingEventListener()
-
-
-
+      addBearingEventListener()
 
 
   currentRoundEl.innerText = `Round: ${state.round}`
@@ -241,14 +234,14 @@ console.log(state.targetBearing)
   currentDiv = "orientate"
   visibilityFunction()
 
- 
 
-
-  
-  
-} else{
-  visibilityFunction()
-  finalScoreEl.innerText = `Your score: ${state.score}`
+  } else{
+    state.round = 1
+    currentDiv = "gameplay"
+    visibilityFunction()
+    currentRoundEl.innerText = `Round: 1`
+    currentScoreEl.innerText = `Score: 0`
+    finalScoreEl.innerText = `Your score: ${state.score}`
   }
 }
 
@@ -379,7 +372,7 @@ const makeScorePositive = (i) => {
   return Math.sqrt(Math.pow(i, 2))
 }
 
-const bearingEventListener = () => {
+const addBearingEventListener = () => {
   if (window.DeviceOrientationAbsoluteEvent) {
     window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
   }
@@ -389,10 +382,34 @@ const bearingEventListener = () => {
   else {
     alert("Sorry, try again on a compatible mobile device!");
   }
-
 }
 
 
+
+const removeBearingEventListener = () => {
+  if (window.DeviceOrientationAbsoluteEvent) {
+    window.removeEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
+  }
+  else if (window.DeviceOrientationEvent) {
+    window.removeEventListener("deviceorientation", deviceOrientationListener);
+  }
+}
+
+// ==============================================================================
+
+// SCOREBOARD FUNCTIONS
+
+restartBtnEl.addEventListener('click', () => {
+  state.round = 1
+  state.score = 0
+  let randomNum = randValue()
+  setTarget(randomNum, state)
+  console.log("hello 3", state.round)
+  currentDiv = 'orientate'
+  visibilityFunction()
+})
+
+// =============================================================================
 
 const init = () => {
     addEventListerToSignUpForm()
