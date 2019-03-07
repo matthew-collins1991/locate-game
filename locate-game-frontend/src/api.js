@@ -41,6 +41,19 @@ const storeRegions = (regions) =>{
 }
 
 
+const addGameToApi = (user_id, score ) =>
+    fetch(GAMESURL, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user_id, score})
+    }).then(resp => resp.json())
+
+
+
+
 
 // ==================Get Current Scoreboard on startup =====================================
 
@@ -56,19 +69,3 @@ const storeScore = user => {
     allScores.push(score)
   })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
