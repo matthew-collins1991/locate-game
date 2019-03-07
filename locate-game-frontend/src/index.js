@@ -22,7 +22,7 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 5;
+let timerSeconds = 10;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
@@ -246,15 +246,15 @@ console.log(state.targetBearing)
 
     let roundScore = Math.floor(makeScorePositive(state.targetBearing - state.userBearing))
     console.log(`this round: ${roundScore}`)
-    
+
     state.score = state.score+roundScore
     console.log(`total score: ${state.score}`)
-    
+
     if (state.round < 5){
-      
+
       ++state.round
       let index = randValue()
-      
+
       setTarget(index, state)
       getTargetBearing()
       roundScore = 0
@@ -314,14 +314,7 @@ function displayTimeLeft(seconds){
    const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (display === '00:00'){
      timerDisplay.textContent = display
-<<<<<<< HEAD
-     console.log('DONE!!')
-    
- 
-
-=======
     // console.log('DONE!!')
->>>>>>> game-logic
      // vibrate & end of round and change round 2
       nextRound()
         console.log(state.target)

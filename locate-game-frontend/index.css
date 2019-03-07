@@ -131,11 +131,11 @@ html, body {
 }
 
 
-#gameplay-btn{
+/* #gameplay-btn{
 
   position:relative;
   margin-top:95%;
-}
+} */
 
 
 
@@ -146,6 +146,8 @@ html, body {
 .full-page-container{
     min-height: 100%;
     padding: 0px;
+    width: 100vw;
+    height: 100vh;
     /* display: flex; */
 }
 
@@ -184,7 +186,7 @@ width: 100vw;
 
 .inner_orientation{
 
-  
+
 
 }
 
@@ -206,14 +208,11 @@ padding: 25px;
 .compass-point {
 
 margin: auto;
- vertical-align: middle;
+ /* vertical-align: middle; */
 
 }
 
-.pointer-section{
 
-  display: flex;
-}
 
 
 div#is_visible.counter-container{
@@ -258,7 +257,23 @@ div#is_visible.counter-container{
 
 margin: auto;
 
+
 }
+
+.pointer-section{
+
+  display: flex;
+  margin: auto;
+  width: 75vw;
+  height: 40vh;
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+
+}
+
 
 .logo-cont {
 
@@ -276,7 +291,7 @@ width: 10em;
 
  .signup_form{
 	font-family: 'Open Sans Condensed', arial, sans;
-	width: 50%;
+	width: 75%;
 	padding: 30px;
 	background: transparent;
 	margin: 50px auto;
