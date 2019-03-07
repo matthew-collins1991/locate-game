@@ -7,8 +7,6 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-Game.destroy_all
-User.destroy_all
 
 
 
