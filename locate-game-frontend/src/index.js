@@ -336,17 +336,7 @@ function displayTimeLeft(seconds){
    const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (display === '00:00'){
      timerDisplay.textContent = display
-<<<<<<< HEAD
     // console.log('DONE!!')
-=======
-
-
-
-
-
-    // console.log('DONE!!')
-
->>>>>>> b4fabd1778360d645f792fddc6dad61368f84228
      // vibrate & end of round and change round 2
       nextRound()
         console.log(state.target)
