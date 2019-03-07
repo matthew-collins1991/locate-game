@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-
 if (window.location.href.includes('ngrok'))
 
 {
@@ -15,6 +14,7 @@ if (window.location.href.includes('ngrok'))
 
 const USERSURL =  BASEURL + '/users'
 const REGIONURL = BASEURL + '/regions'
+const GAMESURL = BASEURL + '/games'
 
 
 const findLocationDiv = document.querySelector('.find-location')
@@ -26,6 +26,7 @@ let timerSeconds = 10;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
+let allScores = []
 let state = {
   round: 1,
   score: 0,
@@ -54,6 +55,7 @@ const title = document.querySelector('.header-bar')
 const logo = document.querySelector('.logo-cont')
 const restartBtnEl = document.querySelector('#restart-btn')
 const loadingDiv = document.querySelector('.loading')
+const scoreboardBodyEl = document.querySelector('.scoreboard-body')
 
 
 // =============================================================================
@@ -77,6 +79,7 @@ function visibilityFunction() {
 
     case "sign-up":
     signUpDiv.id = 'is_hidden'
+    loading()
     loadingDiv.id = 'is_visible'
     title.id = 'is_hidden'
     logo.id ='is_hidden'
@@ -141,7 +144,6 @@ const getTargetBearingFirstRound = () => {
 
 }
 
-
 // ====================SIGN IN FORM=============================================
 
 document.querySelector('#sign-up-link').addEventListener('click', () => document.querySelector('#sign-up-submit').click())
@@ -150,9 +152,13 @@ document.querySelector('#sign-up-link').addEventListener('click', () => document
 const addEventListerToSignUpForm = () => {
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
+
     addUserToApi(event.target.name.value, event.target.username.value)
+     .then(user => state.userId = user.id)
+
 
     state.currentUser = event.target.name.value
+    state.currentUsername = event.target.username.value
     loggedIn = !loggedIn
 
     if (loggedIn) { signUpDiv.style.display = 'none' }
@@ -231,6 +237,11 @@ const randValue = () => {
 }
 
 
+const calculateDegreeDifference =  (bearing, heading) =>  {
+  return Math.abs(((((bearing - heading) % 360) + 540) % 360) - 180)
+}
+
+
 
   gameplayBtn.addEventListener("click", () => {
 
@@ -244,7 +255,7 @@ console.log(state.targetBearing)
 
   const nextRound = () => {
 
-    let roundScore = Math.floor(makeScorePositive(state.targetBearing - state.userBearing))
+    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
     console.log(`this round: ${roundScore}`)
 
     state.score = state.score+roundScore
@@ -272,13 +283,24 @@ console.log(state.targetBearing)
 
   } else{
     state.round = 1
+    addScoreToLocalScores()
+    sortScore()
+    displayScoreboard()
     currentDiv = "gameplay"
     visibilityFunction()
     currentRoundEl.innerText = `Round: 1`
     currentScoreEl.innerText = `Score: 0`
     finalScoreEl.innerText = `Your score: ${state.score}`
+    addGameToApi(state.userId, state.score)
   }
 }
+
+
+const addScoreToLocalScores = () => {
+  const newScore = [state.currentUsername, state.score]
+  allScores.push(newScore)
+}
+
 
 
 
@@ -314,7 +336,17 @@ function displayTimeLeft(seconds){
    const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (display === '00:00'){
      timerDisplay.textContent = display
+<<<<<<< HEAD
     // console.log('DONE!!')
+=======
+
+
+
+
+
+    // console.log('DONE!!')
+
+>>>>>>> b4fabd1778360d645f792fddc6dad61368f84228
      // vibrate & end of round and change round 2
       nextRound()
         console.log(state.target)
@@ -331,7 +363,7 @@ function displayTimeLeft(seconds){
 const countInTimer = () => {
   if(state.round <= 5){
     countInDiv.innerHTML = ''
-    let counter = 3;
+    let counter = 1;
     let gameCountIn = setInterval(function(){
       if (counter === 0) {
         countInDiv.innerHTML = `
@@ -353,7 +385,7 @@ const countInTimer = () => {
 
     }, 1000);
   } else{
-
+    clearInterval(gameCountIn)
     currentDiv = "gameplay"
     visibilityFunction()
   }
@@ -391,11 +423,15 @@ const deviceOrientationListener = (event) => {
     state.userBearing = 360 - alpha;
   }
 
-  testHeadingEl.innerHTML = `Heading: ${Math.floor(state.userBearing)}`
+  testHeadingEl.innerHTML = `TEST HEADING ${Math.floor(state.userBearing)}`
+
+  headingEl = document.querySelector('#orient-heading')
+
+  state.userBearing < 1 ? headingEl.innerHTML = `N` : headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg`
 
   document.body.prepend(testHeadingEl)
   document.body.prepend(testTargetEl)
-  state.userBearing = Math.floor(360 - alpha);
+  // state.userBearing = Math.floor(360 - alpha);
 }
 
 
@@ -419,7 +455,6 @@ const addBearingEventListener = () => {
 }
 
 
-
 const removeBearingEventListener = () => {
   if (window.DeviceOrientationAbsoluteEvent) {
     window.removeEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
@@ -429,7 +464,7 @@ const removeBearingEventListener = () => {
   }
 }
 
-// ==============================================================================
+// ===============================SCOREBOARD FUNCTIONS===============================================
 
 // SCOREBOARD FUNCTIONS
 
@@ -438,17 +473,30 @@ restartBtnEl.addEventListener('click', () => {
   state.score = 0
   let randomNum = randValue()
   setTarget(randomNum, state)
-  console.log("hello 3", state.round)
   currentDiv = 'orientate'
   visibilityFunction()
 })
+
+const sortScore = () => allScores.sort((a, b) => a[1] - b[1])
+
+const displayScoreboard = () =>{
+  scoreboardBodyEl.innerHTML = ''
+  for (var i = 0; i < 3; i++) {
+    const tableRow = document.createElement('tr')
+    tableRow.innerHTML = `
+    <td>${allScores[i][0]}</td>
+    <td>${allScores[i][1]}</td>
+    `
+    scoreboardBodyEl.append(tableRow)
+  }
+}
+
 
 // =============================================================================
 
 const init = () => {
     addEventListerToSignUpForm()
     getRegions().then(storeRegions)
+    getUsers().then(renderScores)
      getTargetBearingFirstRound()
 }
-
-loading()

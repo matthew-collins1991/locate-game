@@ -28,36 +28,44 @@ const addUserToApi = (name, username) => {
         })
 }
 
-
+// ==================Get Locations on startup=====================================
 
 const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
 
 const storeRegions = (regions) =>{
+
   const randValue = () => {
     return Math.floor(Math.random() * 5);
   }
-
-
    allRegions.push(regions)
-   let randomNum = randValue()
-//    setTarget(randomNum, state)
 }
 
 
+const addGameToApi = (user_id, score ) =>
+    fetch(GAMESURL, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user_id, score})
+    }).then(resp => resp.json())
 
 
 
 
 
+// ==================Get Current Scoreboard on startup =====================================
 
+const getUsers = () => fetch(USERSURL).then(resp => resp.json())
 
+const renderScores = users => {
+  users.forEach(user => storeScore(user))
+}
 
-
-
-
-
-
-
-
-
-//
+const storeScore = user => {
+  user.games.map(game =>{
+    let score = [user.username, game.score]
+    allScores.push(score)
+  })
+}
