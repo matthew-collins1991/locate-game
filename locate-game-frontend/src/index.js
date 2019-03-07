@@ -35,9 +35,9 @@ let state = {
 
 
 
-float getDifference(float a1, float a2) {
-    return Math.min((a1-a2)<0?a1-a2+360:a1-a2, (a2-a1)<0?a2-a1+360:a2-a1)
-}
+// float getDifference(float a1, float a2) {
+//     return Math.min((a1-a2)<0?a1-a2+360:a1-a2, (a2-a1)<0?a2-a1+360:a2-a1)
+// }
 
 // =============================================================================
 
@@ -192,34 +192,24 @@ const randValue = () => {
 }
 
 
-<<<<<<< HEAD
 gameplayBtnEl.addEventListener("click", () => nextRound())
-=======
-function nextRound() {
-  
-  getTargetBearing()
-  let roundScore = 0
 
   
   
-const gameplayBtn = document.querySelector("#gameplay-btn")
+  const gameplayBtn = document.querySelector("#gameplay-btn")
+  
+  gameplayBtn.addEventListener("click", () => nextRound())
+  
+  
+  const nextRound = () => {
+    if (state.round <= 5){
 
-gameplayBtn.addEventListener("click", () => nextRound())
-
->>>>>>> parent of 97ee316... no changes
-
-const nextRound = () => {
-  if (state.round <= 5){
-    
+      
+      getTargetBearing()
+      let roundScore = 0
     bearingEventListener()
 
-<<<<<<< HEAD
-    getTargetBearing()
-    let roundScore = 0
-
-=======
     
->>>>>>> parent of 97ee316... no changes
     // ADD SCORING HERE
 
     // gameStartCountdown(3)
