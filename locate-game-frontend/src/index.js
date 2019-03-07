@@ -21,7 +21,7 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 11;
+let timerSeconds = 500;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
@@ -49,7 +49,8 @@ const signUpFormEl = document.querySelector('#signup_form')
 const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
-const countInDiv = document.querySelector('.counter-container')
+const counterCont = document.querySelector(".counter-container")
+const countInDiv = document.querySelector('.count-in-timer')
 const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
 const gameplayBtnEl = document.querySelector('#gameplay-btn')
@@ -92,7 +93,7 @@ function visibilityFunction() {
 
     case "orientate":
     orientateDiv.id = 'is_hidden'
-    countInDiv.id = 'is_visible'
+    counterCont.id = 'is_visible'
     gameplayDiv.id = 'is_hidden'
     scoreboardDiv.id = 'is_hidden'
     currentDiv = 'count-in'
@@ -101,7 +102,8 @@ function visibilityFunction() {
 
     case "count-in":
     // title.id = 'is_hidden'
-    countInDiv.id = 'is_hidden'
+
+    counterCont.id = 'is_hidden'
     gameplayDiv.id = 'is_visible'
     currentDiv = 'gameplay'
     //gameStartCountdown(3)
