@@ -46,6 +46,7 @@ const gameplayDiv = document.querySelector('.gameplay')
 const scoreboardDiv = document.querySelector('.scoreboard')
 const signUpFormEl = document.querySelector('#signup_form')
 // const welcomeEl = document.querySelector('#welcome')
+const signInWrapper = document.querySelector('.signin-wrapper')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const counterCont = document.querySelector(".counter-container")
@@ -80,6 +81,7 @@ function visibilityFunction() {
   switch (currentDiv) {
 
     case "sign-up":
+    signInWrapper.id = 'is_hidden'
     signUpDiv.id = 'is_hidden'
     loading()
     loadingDiv.id = 'is_visible'
