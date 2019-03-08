@@ -267,12 +267,8 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
 console.log(state.round)
     lockedHeadingEl.innerText = ''
 
-    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
-    console.log(`this round: ${roundScore}`)
-    state.roundScore = roundScore
 
-
-    state.score = state.score+roundScore
+    state.score = state.score+state.roundScore
     console.log(`total score: ${state.score}`)
 
     if (state.round < 5){
@@ -281,7 +277,7 @@ console.log(state.round)
 
       setTarget(index, state)
       getTargetBearing()
-      roundScore = 0
+      let roundScore = 0
 
 
       addBearingEventListener()
@@ -345,6 +341,8 @@ function timer(seconds){
       scoreTd.innerText = ''
     } else if (secondsLeft === -1){
       modalDiv.id = "is_visible"
+      let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
+      state.roundScore = roundScore
     }
     else if (secondsLeft === -2) {
       bearingTd.innerText = `Your Bearing: ${state.userBearing}`
@@ -372,7 +370,7 @@ function displayTimeLeft(seconds){
   // const display = `${seconds}:${remainderMilli}`
    let display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (remainderSeconds === -6){
-     nextRound()
+
      console.log(`Round: ${state.round}`)
      // vibrate & end of round and change round 2
      nextRound()
