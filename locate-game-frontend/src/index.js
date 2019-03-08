@@ -25,7 +25,7 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 11;
+let timerSeconds = 7;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
@@ -197,7 +197,7 @@ const showWelcome = () => {
 
 function loadingWait() {
 
-  
+
 
 }
 
@@ -350,13 +350,10 @@ function timer(seconds){
       state.roundScore = roundScore
     }
     else if (secondsLeft === -2) {
-      bearingTd.innerText = `Your Heading: ${Math.floor(state.userBearing)}&deg`
+      bearingTd.innerHTML = `Your Heading: ${Math.floor(state.userBearing)}&#176`
     }
     else if (secondsLeft === -3) {
-      targetTd.innerText = `${state.target.name} Bearing: ${state.targetBearing}&deg`
-    }
-    else if (secondsLeft === -3) {
-      targetTd.innerText = `${state.target.name} Heading: ${state.targetBearing}`
+      targetTd.innerHTML = `${state.target.name} Bearing: ${state.targetBearing}&#176`
     }
     else if (secondsLeft === -4) {
       scoreTd.innerText = `Your Score: ${state.roundScore}`
@@ -376,12 +373,11 @@ function displayTimeLeft(seconds){
   const minutes = Math.floor(seconds/60)
   let remainderSeconds = seconds % 60
   // const display = `${seconds}:${remainderMilli}`
-   let display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
+  let display = '00:07'
+   display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (remainderSeconds === -6){
-
-     console.log(`Round: ${state.round}`)
      // vibrate & end of round and change round 2
-
+     nextRound()
    }else if (remainderSeconds < 0) {
      display = '00:00'
 
