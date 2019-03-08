@@ -7,7 +7,7 @@ if (window.location.href.includes('ngrok'))
 
 {
 
-  BASEURL = 'https://b5b1bb1e.ngrok.io/api/v1'
+  BASEURL = 'https://674c555c.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -277,7 +277,7 @@ console.log(state.round)
 
       setTarget(index, state)
       getTargetBearing()
-      let roundScore = 0
+
 
 
       addBearingEventListener()
