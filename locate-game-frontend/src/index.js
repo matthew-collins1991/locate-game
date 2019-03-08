@@ -345,10 +345,10 @@ function timer(seconds){
       state.roundScore = roundScore
     }
     else if (secondsLeft === -2) {
-      bearingTd.innerText = `Your Bearing: ${state.userBearing}`
+      bearingTd.innerText = `Your Bearing: ${Math.floor(state.userBearing)}&deg`
     }
     else if (secondsLeft === -3) {
-      targetTd.innerText = `${state.target.name} Bearing: ${state.targetBearing}`
+      targetTd.innerText = `${state.target.name} Bearing: ${state.targetBearing}&deg`
     }
     else if (secondsLeft === -4) {
       scoreTd.innerText = `Your Score: ${state.roundScore}`
@@ -459,8 +459,8 @@ const deviceOrientationListener = (event) => {
       window.navigator.vibrate(20)
 
 
-} else { 
-  
+} else {
+
     headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg` }
 
 
