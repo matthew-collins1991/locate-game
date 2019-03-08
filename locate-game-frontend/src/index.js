@@ -454,11 +454,18 @@ const deviceOrientationListener = (event) => {
 
   headingEl = document.querySelector('#orient-heading')
 
-  state.userBearing < 1 ? headingEl.innerHTML = `N` : headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg`
+  if (state.userBearing < 1) {
+      headingEl.innerHTML = `<h3 style= "font-size: 100px;" id="orient-heading">N</h3>`
+      window.navigator.vibrate(20)
 
 
-  testHeadingEl.innerText = state.userBearing
-  document.body.prepend(testHeadingEl)
+} else { 
+  
+    headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg` }
+
+
+  // testHeadingEl.innerText = state.userBearing
+  // document.body.prepend(testHeadingEl)
   // document.body.prepend(testTargetEl)
 
 }
