@@ -139,8 +139,9 @@ const getTargetBearingFirstRound = () => {
   readyBtnEL.addEventListener('click', () => {
     setTarget(randValue(), state)
     getTargetBearing()
-    console.log(state.targetBearing)
-    console.log(state.target)
+    // console.log(state.targetBearing)
+    // console.log(state.target)
+    window.navigator.vibrate(20)
   })
 
 }
@@ -167,6 +168,7 @@ signUpFormEl.addEventListener('submit', (event) => {
     showWelcome()
     addPointerToPage()
     addBearingEventListener()
+    window.navigator.vibrate(50)
 
 })
 }
@@ -253,7 +255,6 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
   gameplayBtnEl.addEventListener('click', () => {
     addLockedBearingOnButtonPress()
     removeBearingEventListener()
-    
   })
 
   console.log(state.userBearing)
