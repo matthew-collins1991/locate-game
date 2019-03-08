@@ -308,20 +308,26 @@ div#is_visible.counter-container{
 
 .count-in-timer{
 
-  margin: auto;
+margin: auto;
+/* font-family: 'Major Mono Display', monospace; */
+animation: pulse 4s ease-out infinite;
+}
 
-  animation: pulse 4s ease-out infinite;
+.count-in-timer h1{
+
+font-family: 'Major Mono Display', monospace;
+
 }
 
 @keyframes pulse {
   0%,
   100% {
-    transform: scale(1.5);
+    transform: scale(1);
     opacity: 0;
   }
   48%,
   52% {
-    transform: scale(2.5);
+    transform: scale(2);
     opacity: 2;
   }
 }
@@ -359,6 +365,23 @@ margin: auto;
   margin: auto;
   width: 75vw;
   height: 40vh;
+}
+
+#round{
+    margin-top:5%;
+    float: left;
+
+}
+
+#score{
+
+  float: right;
+
+}
+
+.display_time_left{
+
+    margin-top:15%;
 }
 
 

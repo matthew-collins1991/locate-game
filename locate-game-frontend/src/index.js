@@ -25,7 +25,7 @@ const findLocationDiv = document.querySelector('.find-location')
 
 let timerCount;
 let countDown;
-let timerSeconds = 10;
+let timerSeconds = 11;
 let currentDiv = "sign-up"
 let loggedIn = false
 let allRegions = []
@@ -195,6 +195,11 @@ const showWelcome = () => {
 
 // =============================LOADING PAGE====================================
 
+function loadingWait() {
+
+  
+
+}
 
 const loading = () => {
 
@@ -324,7 +329,7 @@ function timer(seconds){
   clearInterval(timerCount)
   const now = Date.now()
   const then = now + seconds * 1000;
-  displayTimeLeft(seconds)
+  // displayTimeLeft(seconds)
 
   // querySelectors of modal
   const modalDiv = document.querySelector('.modal')
@@ -375,7 +380,7 @@ function displayTimeLeft(seconds){
      nextRound()
      console.log(`Round: ${state.round}`)
      // vibrate & end of round and change round 2
-     nextRound()
+
    }else if (remainderSeconds < 0) {
      display = '00:00'
 
