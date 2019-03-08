@@ -7,7 +7,7 @@ if (window.location.href.includes('ngrok'))
 
 {
 
-  BASEURL = ' https://4dae0d5b.ngrok.io/api/v1'
+  BASEURL = 'https://b5b1bb1e.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -141,8 +141,9 @@ const getTargetBearingFirstRound = () => {
   readyBtnEL.addEventListener('click', () => {
     setTarget(randValue(), state)
     getTargetBearing()
-    console.log(state.targetBearing)
-    console.log(state.target)
+    // console.log(state.targetBearing)
+    // console.log(state.target)
+    window.navigator.vibrate(20)
   })
 
 }
@@ -169,6 +170,8 @@ signUpFormEl.addEventListener('submit', (event) => {
     showWelcome()
     addPointerToPage()
     addBearingEventListener()
+    window.navigator.vibrate(50)
+    console.log(state.round)
 
 })
 }
@@ -252,20 +255,16 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
 
 
 
-
-
-
   gameplayBtnEl.addEventListener('click', () => {
     addLockedBearingOnButtonPress()
     removeBearingEventListener()
-
   })
 
-  console.log(state.userBearing)
+  // console.log(state.userBearing)
 
   const nextRound = () => {
 
-
+console.log(state.round)
     lockedHeadingEl.innerText = ''
 
     let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
@@ -277,7 +276,6 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
     console.log(`total score: ${state.score}`)
 
     if (state.round < 5){
-
       ++state.round
       let index = randValue()
 
@@ -359,7 +357,6 @@ function timer(seconds){
     }
     else if (secondsLeft === -6) {
       modalDiv.id = "is_hidden"
-      displayTimeLeft(secondsLeft)
       clearInterval(timerCount)
     }
 // display it
@@ -369,17 +366,16 @@ function timer(seconds){
 
 }
 
-
 function displayTimeLeft(seconds){
   const minutes = Math.floor(seconds/60)
-  const remainderSeconds = seconds % 60
+  let remainderSeconds = seconds % 60
   // const display = `${seconds}:${remainderMilli}`
    let display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (remainderSeconds === -6){
+     nextRound()
+     console.log(`Round: ${state.round}`)
      // vibrate & end of round and change round 2
-      nextRound()
-        console.log(state.target)
-        console.log(state.targetBearing)
+     nextRound()
    }else if (remainderSeconds < 0) {
      display = '00:00'
 
