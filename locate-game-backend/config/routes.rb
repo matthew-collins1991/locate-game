@@ -8,6 +8,7 @@
         resources :games
         resources :cities
         resources :regions
+        post 'signin', to: 'users#signin'
       end
     end
   end
