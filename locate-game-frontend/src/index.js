@@ -7,7 +7,7 @@ if (window.location.href.includes('ngrok'))
 
 {
 
-  BASEURL = 'https://674c555c.ngrok.io/api/v1'
+  BASEURL = 'https://ba8e0acd.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
