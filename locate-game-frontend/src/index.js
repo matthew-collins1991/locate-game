@@ -42,7 +42,7 @@ const orientateDiv = document.querySelector('.orientate')
 const gameplayDiv = document.querySelector('.gameplay')
 const scoreboardDiv = document.querySelector('.scoreboard')
 const signUpFormEl = document.querySelector('#signup_form')
-const welcomeEl = document.querySelector('#welcome')
+// const welcomeEl = document.querySelector('#welcome')
 const locationEl = document.querySelector('#current-location')
 const targetNameEl = document.querySelector("#target-name")
 const counterCont = document.querySelector(".counter-container")
@@ -184,7 +184,7 @@ const showWelcome = () => {
     currentDiv = "sign-up"
     visibilityFunction()
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
-    welcomeEl.innerText = `Welcome ${state.currentUser}`
+    // welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
 // =============================LOADING PAGE====================================
