@@ -417,6 +417,7 @@ width: 10em;
 
 
 
+
 /* =========================== MODAL BOX==================================== */
 
 
@@ -454,3 +455,8 @@ width: 10em;
 
 
 /*  */
+=======
+#locked-target-bearing {
+  height: 20px;
+  max-height: 20px;
+}

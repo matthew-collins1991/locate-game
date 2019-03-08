@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if (window.location.href.includes('ngrok'))
 
 {
+
   BASEURL = ' https://4dae0d5b.ngrok.io/api/v1'
 
 } else {
@@ -15,6 +16,8 @@ if (window.location.href.includes('ngrok'))
 const USERSURL =  BASEURL + '/users'
 const REGIONURL = BASEURL + '/regions'
 const GAMESURL = BASEURL + '/games'
+const SIGNINURL = BASEURL + '/signin'
+
 
 
 const findLocationDiv = document.querySelector('.find-location')
@@ -49,7 +52,6 @@ const counterCont = document.querySelector(".counter-container")
 const countInDiv = document.querySelector('.count-in-timer')
 const readyBtnEL = document.querySelector('#ready-btn')
 const timerDisplay = document.querySelector('.display_time_left')
-const gameplayBtnEl = document.querySelector('#gameplay-btn')
 const finalScoreEl = document.querySelector('#final-score')
 const title = document.querySelector('.header-bar')
 const logo = document.querySelector('.logo-cont')
@@ -152,7 +154,7 @@ const addEventListerToSignUpForm = () => {
 signUpFormEl.addEventListener('submit', (event) => {
     event.preventDefault()
 
-    addUserToApi(event.target.name.value, event.target.username.value)
+    signIn(event.target.username.value)
      .then(user => state.userId = user.id)
 
 
@@ -183,7 +185,7 @@ const showWelcome = () => {
     currentDiv = "sign-up"
     visibilityFunction()
     // if (!loggedIn) { signUpDiv.style.display = 'none' }
-    welcomeEl.innerText = `Welcome ${state.currentUser}`
+    // welcomeEl.innerText = `Welcome ${state.currentUser}`
 }
 
 // =============================LOADING PAGE====================================
@@ -227,7 +229,8 @@ const loading = () => {
 // Gameplay Round functionality
 const currentRoundEl = document.querySelector('#round')
 const currentScoreEl = document.querySelector('#score')
-const gameplayBtn = document.querySelector("#gameplay-btn")
+const gameplayBtnEl = document.querySelector("#gameplay-btn")
+const lockedHeadingEl = document.querySelector('#locked-target-bearing')
 
 
 // get a random number between 0 and 4 to select city from
@@ -241,22 +244,31 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
 }
 
 
+ const addLockedBearingOnButtonPress = () => {
+   lockedHeadingEl.innerHTML = `Heading Locked: ${Math.floor(state.userBearing)}&deg`
+ }
 
-  gameplayBtn.addEventListener("click", () => {
 
-    // console.log(state.target)
-    // console.log(state.targetBearing)
-    // nextRound()
-    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
-    console.log(`this round: ${roundScore}`)
-    state.roundScore = roundScore
+
+
+
+
+  gameplayBtnEl.addEventListener('click', () => {
+    addLockedBearingOnButtonPress()
     removeBearingEventListener()
-console.log(state.target)
-console.log(state.targetBearing)
+
   })
+
+  console.log(state.userBearing)
 
   const nextRound = () => {
 
+
+    lockedHeadingEl.innerText = ''
+
+    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
+    console.log(`this round: ${roundScore}`)
+    state.roundScore = roundScore
 
 
     state.score = state.score+roundScore
@@ -368,6 +380,7 @@ function displayTimeLeft(seconds){
         console.log(state.targetBearing)
    }else if (remainderSeconds < 0) {
      display = '00:00'
+
    }else {
      timerDisplay.textContent = display
    }
@@ -443,15 +456,15 @@ const deviceOrientationListener = (event) => {
     state.userBearing = 360 - alpha;
   }
 
-  testHeadingEl.innerHTML = `TEST HEADING ${Math.floor(state.userBearing)}`
-
   headingEl = document.querySelector('#orient-heading')
 
   state.userBearing < 1 ? headingEl.innerHTML = `N` : headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg`
 
+
+  testHeadingEl.innerText = state.userBearing
   document.body.prepend(testHeadingEl)
-  document.body.prepend(testTargetEl)
-  // state.userBearing = Math.floor(360 - alpha);
+  // document.body.prepend(testTargetEl)
+
 }
 
 
@@ -473,7 +486,6 @@ const addBearingEventListener = () => {
     alert("Sorry, try again on a compatible mobile device!");
   }
 }
-
 
 const removeBearingEventListener = () => {
   if (window.DeviceOrientationAbsoluteEvent) {
