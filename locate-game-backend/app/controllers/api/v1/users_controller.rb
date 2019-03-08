@@ -24,7 +24,11 @@ class Api::V1::UsersController < ApplicationController
             render json: @user
           else
             render json: {error: "User not found"}, status: 404
-
+        end
       end
-    end
+
+      def signin
+        @user = User.find_or_create_by(username: params[:username])
+        render json: @user
+      end
 end

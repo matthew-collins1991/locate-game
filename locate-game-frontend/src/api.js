@@ -28,6 +28,19 @@ const addUserToApi = (name, username) => {
         })
 }
 
+const signIn = (username) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Accepts': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    }
+    return fetch(SIGNINURL, options)
+        .then(resp => resp.json())
+}
+
 // ==================Get Locations on startup=====================================
 
 const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
@@ -40,7 +53,6 @@ const storeRegions = (regions) =>{
    allRegions.push(regions)
 }
 
-
 const addGameToApi = (user_id, score ) =>
     fetch(GAMESURL, {
         method: 'POST',
@@ -50,9 +62,6 @@ const addGameToApi = (user_id, score ) =>
         },
         body: JSON.stringify({user_id, score})
     }).then(resp => resp.json())
-
-
-
 
 
 // ==================Get Current Scoreboard on startup =====================================
