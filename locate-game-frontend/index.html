@@ -22,7 +22,7 @@
 
 <!-- ==================================== Sign in ================================= -->
 <!-- LOGO -->
-<div class='signin-wrapper'>
+<div class='signin-wrapper' id="is_visible">
         <div class='logo-cont' id='is_visible'>
             <img src="image/logo.svg" alt="compass logo" class='logo'>
         </div>
@@ -66,7 +66,7 @@
     <div class="orientate" id='is_hidden'>
 
       <div class='inner_orientation'>
-            <h2 id= "welcome"></h2>
+            <!-- <h2 id= "welcome"></h2> -->
             <br>
             <h2>Orientate Yourself!</h2>
 
@@ -87,6 +87,8 @@
 
 
     </div>
+
+  </div>
 
 
 
@@ -112,6 +114,9 @@
       <p id="round"> Round: 1</p>
       <p id="score"> Score: 0</p>
       <br>
+
+        <div  id="locked-target-bearing" ><h3></h3></div>
+
       <div class="pointer-section">
           <!-- SVG  -->
 
@@ -146,7 +151,33 @@
       <br>
     </div>
 
-    <!-- =========================================================================== -->
+
+    <!-- ============================SHOW ROUND SCORE DIV========================================= -->
+
+
+    <div class="modal" id='is_hidden'>
+
+
+      <table>
+        <tbody id = "modal-body">
+          <tr>
+            <td id= "bearingTd"></td>
+          </tr>
+          <tr>
+            <td id= "targetTd"></td>
+          </tr>
+          <tr>
+            <td id= "scoreTd"></td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <!-- ======================SCOREBOARD DIV===================================================== -->
 
 
 <!-- Div to show scoreboard -->
