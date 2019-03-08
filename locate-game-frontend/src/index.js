@@ -345,10 +345,13 @@ function timer(seconds){
       state.roundScore = roundScore
     }
     else if (secondsLeft === -2) {
-      bearingTd.innerText = `Your Bearing: ${Math.floor(state.userBearing)}&deg`
+      bearingTd.innerText = `Your Heading: ${Math.floor(state.userBearing)}&deg`
     }
     else if (secondsLeft === -3) {
       targetTd.innerText = `${state.target.name} Bearing: ${state.targetBearing}&deg`
+    }
+    else if (secondsLeft === -3) {
+      targetTd.innerText = `${state.target.name} Heading: ${state.targetBearing}`
     }
     else if (secondsLeft === -4) {
       scoreTd.innerText = `Your Score: ${state.roundScore}`
