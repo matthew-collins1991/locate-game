@@ -7,7 +7,7 @@ if (window.location.href.includes('ngrok'))
 
 {
 
-  BASEURL = ' https://4dae0d5b.ngrok.io/api/v1'
+  BASEURL = 'https://b5b1bb1e.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -169,6 +169,7 @@ signUpFormEl.addEventListener('submit', (event) => {
     addPointerToPage()
     addBearingEventListener()
     window.navigator.vibrate(50)
+    console.log(state.round)
 
 })
 }
@@ -257,11 +258,11 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
     removeBearingEventListener()
   })
 
-  console.log(state.userBearing)
+  // console.log(state.userBearing)
 
   const nextRound = () => {
 
-
+console.log(state.round)
     lockedHeadingEl.innerText = ''
 
     let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
@@ -372,11 +373,11 @@ function displayTimeLeft(seconds){
   // const display = `${seconds}:${remainderMilli}`
    let display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (remainderSeconds === -6){
+     nextRound()
+     console.log(`Round: ${state.round}`)
      // vibrate & end of round and change round 2
-      nextRound()
-        console.log(state.target)
-        console.log(state.targetBearing)
-   }else if (remainderSeconds < 0) {
+    }else if (remainderSeconds < 0) {
+     
      display = '00:00'
 
    }else {
@@ -428,7 +429,7 @@ const countInTimer = () => {
 const addPointerToPage = () => {
 
      const compass = document.querySelector('.compass')
-      const circle = document.querySelector('#svg_1')loading
+      const circle = document.querySelector('#svg_1')
 
     window.addEventListener('deviceorientation', function (event) {
           let alpha = event.alpha
