@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if (window.location.href.includes('ngrok'))
 
 {
-  BASEURL = 'https://c42d24db.ngrok.io/api/v1'
+  BASEURL = ' https://4dae0d5b.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -114,9 +114,8 @@ function visibilityFunction() {
     case "gameplay":
     gameplayDiv.id = 'is_hidden'
     scoreboardDiv.id = 'is_visible'
-    countInDiv.id = 'is_hidden'
+    counterCont.id = 'is_hidden'
     currentDiv = 'scoreboard'
-
     break;
 
     case "scoreboard":
@@ -248,6 +247,9 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
     // console.log(state.target)
     // console.log(state.targetBearing)
     // nextRound()
+    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
+    console.log(`this round: ${roundScore}`)
+    state.roundScore = roundScore
     removeBearingEventListener()
 console.log(state.target)
 console.log(state.targetBearing)
@@ -255,8 +257,7 @@ console.log(state.targetBearing)
 
   const nextRound = () => {
 
-    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
-    console.log(`this round: ${roundScore}`)
+
 
     state.score = state.score+roundScore
     console.log(`total score: ${state.score}`)
@@ -313,12 +314,38 @@ function timer(seconds){
   const then = now + seconds * 1000;
   displayTimeLeft(seconds)
 
+  // querySelectors of modal
+  const modalDiv = document.querySelector('.modal')
+  const bearingTd = document.querySelector('#bearingTd')
+  const targetTd = document.querySelector('#targetTd')
+  const scoreTd = document.querySelector('#scoreTd')
+  // targetTd.innerText = `${state.target.name}Bearing:`
+
   timerCount = setInterval(() => {
     const secondsLeft = Math.round((then - Date.now())/ 1000)
 
 // check if it should stop
 
-    if(secondsLeft <= 0) {
+    if(secondsLeft === 0) {
+
+      bearingTd.innerText = ''
+      targetTd.innerText = ''
+      scoreTd.innerText = ''
+    } else if (secondsLeft === -1){
+      modalDiv.id = "is_visible"
+    }
+    else if (secondsLeft === -2) {
+      bearingTd.innerText = `Your Bearing: ${state.userBearing}`
+    }
+    else if (secondsLeft === -3) {
+      targetTd.innerText = `${state.target.name} Bearing: ${state.targetBearing}`
+    }
+    else if (secondsLeft === -4) {
+      scoreTd.innerText = `Your Score: ${state.roundScore}`
+    }
+    else if (secondsLeft === -6) {
+      modalDiv.id = "is_hidden"
+      displayTimeLeft(secondsLeft)
       clearInterval(timerCount)
     }
 // display it
@@ -333,15 +360,14 @@ function displayTimeLeft(seconds){
   const minutes = Math.floor(seconds/60)
   const remainderSeconds = seconds % 60
   // const display = `${seconds}:${remainderMilli}`
-   const display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
-   if (display === '00:00'){
-     timerDisplay.textContent = display
-    // console.log('DONE!!')
+   let display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
+   if (remainderSeconds === -6){
      // vibrate & end of round and change round 2
       nextRound()
         console.log(state.target)
         console.log(state.targetBearing)
-
+   }else if (remainderSeconds < 0) {
+     display = '00:00'
    }else {
      timerDisplay.textContent = display
    }
@@ -353,20 +379,24 @@ function displayTimeLeft(seconds){
 const countInTimer = () => {
   if(state.round <= 5){
     countInDiv.innerHTML = ''
-    let counter = 3;
+    let counter = 4;
     let gameCountIn = setInterval(function(){
       if (counter === 0) {
         countInDiv.innerHTML = `
         <h1>GO!</h1>
         `
-
         --counter
       } else if (counter === -1){
         currentDiv = "count-in"
         visibilityFunction()
         clearInterval(gameCountIn);
         timer(timerSeconds)
-      } else{
+      } else if (counter === 4){
+        countInDiv.innerHTML = `
+        <h1>Round ${state.round}</h1>
+        `
+        --counter
+      }else {
         countInDiv.innerHTML = `
         <h1>${counter}</h1>
         `
