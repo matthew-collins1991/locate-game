@@ -28,6 +28,19 @@ const addUserToApi = (name, username) => {
         })
 }
 
+const signIn = (username) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Accepts': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    }
+    return fetch(SIGNINURL, options)
+        .then(resp => resp.json())
+}
+
 // ==================Get Locations on startup=====================================
 
 const getRegions = () => fetch(REGIONURL).then(resp => resp.json())
