@@ -7,7 +7,7 @@ if (window.location.href.includes('ngrok'))
 
 {
 
-  BASEURL = 'https://b5b1bb1e.ngrok.io/api/v1'
+  BASEURL = 'https://674c555c.ngrok.io/api/v1'
 
 } else {
   BASEURL = 'http://localhost:3000/api/v1'
@@ -272,12 +272,8 @@ const calculateDegreeDifference =  (bearing, heading) =>  {
 console.log(state.round)
     lockedHeadingEl.innerText = ''
 
-    let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
-    console.log(`this round: ${roundScore}`)
-    state.roundScore = roundScore
 
-
-    state.score = state.score+roundScore
+    state.score = state.score+state.roundScore
     console.log(`total score: ${state.score}`)
 
     if (state.round < 5){
@@ -286,7 +282,7 @@ console.log(state.round)
 
       setTarget(index, state)
       getTargetBearing()
-      roundScore = 0
+
 
 
       addBearingEventListener()
@@ -350,12 +346,17 @@ function timer(seconds){
       scoreTd.innerText = ''
     } else if (secondsLeft === -1){
       modalDiv.id = "is_visible"
+      let roundScore = Math.floor(calculateDegreeDifference(state.targetBearing, state.userBearing))
+      state.roundScore = roundScore
     }
     else if (secondsLeft === -2) {
-      bearingTd.innerText = `Your Bearing: ${state.userBearing}`
+      bearingTd.innerText = `Your Heading: ${Math.floor(state.userBearing)}&deg`
     }
     else if (secondsLeft === -3) {
-      targetTd.innerText = `${state.target.name} Bearing: ${state.targetBearing}`
+      targetTd.innerText = `${state.target.name} Bearing: ${state.targetBearing}&deg`
+    }
+    else if (secondsLeft === -3) {
+      targetTd.innerText = `${state.target.name} Heading: ${state.targetBearing}`
     }
     else if (secondsLeft === -4) {
       scoreTd.innerText = `Your Score: ${state.roundScore}`
@@ -377,7 +378,7 @@ function displayTimeLeft(seconds){
   // const display = `${seconds}:${remainderMilli}`
    let display = `${minutes < 10 ? '0': ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`
    if (remainderSeconds === -6){
-     nextRound()
+
      console.log(`Round: ${state.round}`)
      // vibrate & end of round and change round 2
 
@@ -461,11 +462,18 @@ const deviceOrientationListener = (event) => {
 
   headingEl = document.querySelector('#orient-heading')
 
-  state.userBearing < 1 ? headingEl.innerHTML = `N` : headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg`
+  if (state.userBearing < 1) {
+      headingEl.innerHTML = `<h3 style= "font-size: 100px;" id="orient-heading">N</h3>`
+      window.navigator.vibrate(20)
 
 
-  testHeadingEl.innerText = state.userBearing
-  document.body.prepend(testHeadingEl)
+} else {
+
+    headingEl.innerHTML = `${Math.floor(state.userBearing)}&deg` }
+
+
+  // testHeadingEl.innerText = state.userBearing
+  // document.body.prepend(testHeadingEl)
   // document.body.prepend(testTargetEl)
 
 }
