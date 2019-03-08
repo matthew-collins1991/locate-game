@@ -398,7 +398,7 @@ const addPointerToPage = () => {
 
 }
 
-let testHeadingEl = document.createElement('h1')
+// let testHeadingEl = document.createElement('h1')
 
 
 // callback function for bearing event listener
@@ -413,7 +413,7 @@ const deviceOrientationListener = (event) => {
     state.userBearing = 360 - alpha;
   }
 
-  testHeadingEl.innerHTML = `TEST HEADING ${Math.floor(state.userBearing)}`
+  // testHeadingEl.innerHTML = `TEST HEADING ${Math.floor(state.userBearing)}`
 
   headingEl = document.querySelector('#orient-heading')
 
